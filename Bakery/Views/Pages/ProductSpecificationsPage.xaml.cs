@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Bakery.Views
 {
     /// <summary>
-    /// Логика взаимодействия для UserAuthView.xaml
+    /// Логика взаимодействия для ProductSpecificationsPage.xaml
     /// </summary>
-    public partial class UserAuthView : Window
+    public partial class ProductSpecificationsPage : Page
     {
-        public UserAuthView()
+        public ProductSpecificationsPage()
         {
             InitializeComponent();
         }

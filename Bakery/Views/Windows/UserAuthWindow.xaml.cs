@@ -12,14 +12,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Bakery.Views
+namespace Bakery.Views.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для UserRegView.xaml
+    /// Логика взаимодействия для UserAuthView.xaml
     /// </summary>
-    public partial class UserRegView : Window
+    public partial class UserAuthWindow : Window
     {
-        public UserRegView()
+        public UserAuthWindow()
         {
             InitializeComponent();
         }

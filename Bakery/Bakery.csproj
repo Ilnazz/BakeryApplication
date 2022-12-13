@@ -139,13 +139,20 @@
     </Compile>
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModels\ProductSpecificationsViewModel.cs" />
     <Compile Include="ViewModels\UserAuthViewModel.cs" />
     <Compile Include="ViewModels\UserRegViewModel.cs" />
-    <Compile Include="Views\UserAuthView.xaml.cs">
-      <DependentUpon>UserAuthView.xaml</DependentUpon>
+    <Compile Include="Views\Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\UserRegView.xaml.cs">
-      <DependentUpon>UserRegView.xaml</DependentUpon>
+    <Compile Include="Views\Pages\ProductSpecificationsPage.xaml.cs">
+      <DependentUpon>ProductSpecificationsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\UserAuthWindow.xaml.cs">
+      <DependentUpon>UserAuthWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Windows\UserRegWindow.xaml.cs">
+      <DependentUpon>UserRegWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -155,11 +162,19 @@
     <Compile Include="DataTypes\Enums\MeasureUnit.cs" />
     <Compile Include="DataTypes\Enums\PlanState.cs" />
     <Compile Include="DataTypes\Enums\EmployeeRole.cs" />
-    <Page Include="Views\UserAuthView.xaml">
+    <Page Include="Views\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\UserRegView.xaml">
+    <Page Include="Views\Pages\ProductSpecificationsPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\UserAuthWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\UserRegWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
