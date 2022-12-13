@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="de1bad5c651e418a98047e55c2bf0319" Name="Diagram1">
+        <EntityTypeShape EntityType="DBModel.Employee" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Gender" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Material" Width="1.5" PointX="7.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.MaterialSpecification" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.MaterialsPurchasePlan" Width="1.5" PointX="5.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.MaterialsPurchasePlan_SupplierAndMaterialSpecification" Width="1.5" PointX="10.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.MeasureUnit" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.PlanState" Width="1.5" PointX="3" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Product" Width="1.5" PointX="13.5" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.ProductionPlan" Width="1.5" PointX="8.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.ProductionPlan_Product" Width="1.5" PointX="10.5" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.ProductRecipe" Width="1.5" PointX="10.5" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.ProductSpecification" Width="1.5" PointX="8.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Realization" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Realization_Product" Width="1.5" PointX="15.75" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Realization_ResponsibleEmployees" Width="1.5" PointX="5.25" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Role" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.Supplier" Width="1.5" PointX="8.25" PointY="12" IsExpanded="true" />
+        <EntityTypeShape EntityType="DBModel.User" Width="1.5" PointX="5.25" PointY="17.5" IsExpanded="true" />
+        <AssociationConnector Association="DBModel.FK_Employee_Gender" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Employee_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Realization_ResponsibleEmployees_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_User_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Material_MaterialSpecification" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Material_MaterialsPurchasePlan" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_MaterialSpecification_MeasureUnit" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_ProductRecipe_MaterialSpecification" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_MaterialsPurchasePlan_PlanState" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_ProductSpecification_MeasureUnit1" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_ProductionPlan_PlanState" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Product_ProductionPlan" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Product_ProductSpecification" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Realization_Product_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_ProductionPlan_Product_ProductionPlan" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_ProductionPlan_Product_ProductSpecification" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_ProductRecipe_ProductSpecification" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Realization_Product_Realization" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.FK_Realization_ResponsibleEmployees_Realization" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.MaterialsPurchasePlan_ResponsibleEmployees" ManuallyRouted="false" />
+        <AssociationConnector Association="DBModel.ProductionPlan_ResponsibleEmployees" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

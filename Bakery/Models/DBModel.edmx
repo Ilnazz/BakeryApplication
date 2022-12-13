@@ -1,0 +1,1448 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище DBModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Salary" Type="money" Nullable="false" />
+          <Property Name="GenderId" Type="int" Nullable="false" />
+          <Property Name="RoleId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="MaterialSpecification" Type="int" Nullable="false" />
+          <Property Name="MaterialsPurchasePlanId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaterialSpecification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MeasureUnitId" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaterialsPurchasePlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PlanStateId" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaterialsPurchasePlan_ResponsibleEmployees">
+          <Key>
+            <PropertyRef Name="MaterialsPurchasePlanId" />
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="MaterialsPurchasePlanId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+          <Key>
+            <PropertyRef Name="MaterialsPurchasePlanId" />
+            <PropertyRef Name="SupplierId" />
+            <PropertyRef Name="MaterialSpecificationId" />
+          </Key>
+          <Property Name="MaterialsPurchasePlanId" Type="int" Nullable="false" />
+          <Property Name="SupplierId" Type="int" Nullable="false" />
+          <Property Name="MaterialSpecificationId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MeasureUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PlanState">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationId" Type="int" Nullable="false" />
+          <Property Name="ProductionPlanId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductionPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="PlanStateId" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductionPlan_Product">
+          <Key>
+            <PropertyRef Name="ProductionPlanid" />
+            <PropertyRef Name="ProductSpecificationId" />
+          </Key>
+          <Property Name="ProductionPlanid" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductionPlan_ResponsibleEmployees">
+          <Key>
+            <PropertyRef Name="ProductionPlanId" />
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="ProductionPlanId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductRecipe">
+          <Key>
+            <PropertyRef Name="ProductSpecificationId" />
+            <PropertyRef Name="MaterialSpecificationId" />
+          </Key>
+          <Property Name="ProductSpecificationId" Type="int" Nullable="false" />
+          <Property Name="MaterialSpecificationId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductSpecification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="Weight" Type="int" Nullable="false" />
+          <Property Name="WeightMeasureUnitId" Type="int" Nullable="false" />
+          <Property Name="Photo" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Realization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="DateTime" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Realization_Product">
+          <Key>
+            <PropertyRef Name="RealizationId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="RealizationId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Realization_ResponsibleEmployees">
+          <Key>
+            <PropertyRef Name="RealizationId" />
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="RealizationId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Employee_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_MaterialSpecification">
+          <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="MaterialSpecification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_MaterialsPurchasePlan">
+          <End Role="MaterialsPurchasePlan" Type="Self.MaterialsPurchasePlan" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialsPurchasePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="MaterialsPurchasePlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialSpecification_MeasureUnit">
+          <End Role="MeasureUnit" Type="Self.MeasureUnit" Multiplicity="1" />
+          <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasureUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialSpecification">
+              <PropertyRef Name="MeasureUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_PlanState">
+          <End Role="PlanState" Type="Self.PlanState" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan" Type="Self.MaterialsPurchasePlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanState">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan">
+              <PropertyRef Name="PlanStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_ResponsibleEmployees_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan_ResponsibleEmployees" Type="Self.MaterialsPurchasePlan_ResponsibleEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan_ResponsibleEmployees">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_ResponsibleEmployees_MaterialsPurchasePlan">
+          <End Role="MaterialsPurchasePlan" Type="Self.MaterialsPurchasePlan" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan_ResponsibleEmployees" Type="Self.MaterialsPurchasePlan_ResponsibleEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialsPurchasePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan_ResponsibleEmployees">
+              <PropertyRef Name="MaterialsPurchasePlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification">
+          <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Type="Self.MaterialsPurchasePlan_SupplierAndMaterialSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+              <PropertyRef Name="MaterialSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan">
+          <End Role="MaterialsPurchasePlan" Type="Self.MaterialsPurchasePlan" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Type="Self.MaterialsPurchasePlan_SupplierAndMaterialSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialsPurchasePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+              <PropertyRef Name="MaterialsPurchasePlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Type="Self.MaterialsPurchasePlan_SupplierAndMaterialSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductionPlan">
+          <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSpecification">
+          <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionPlan_PlanState">
+          <End Role="PlanState" Type="Self.PlanState" Multiplicity="1" />
+          <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanState">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionPlan">
+              <PropertyRef Name="PlanStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionPlan_Product_ProductionPlan">
+          <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="1" />
+          <End Role="ProductionPlan_Product" Type="Self.ProductionPlan_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionPlan_Product">
+              <PropertyRef Name="ProductionPlanid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionPlan_Product_ProductSpecification">
+          <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="1" />
+          <End Role="ProductionPlan_Product" Type="Self.ProductionPlan_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionPlan_Product">
+              <PropertyRef Name="ProductSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionPlan_ResponsibleEmployees_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="ProductionPlan_ResponsibleEmployees" Type="Self.ProductionPlan_ResponsibleEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionPlan_ResponsibleEmployees">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionPlan_ResponsibleEmployees_ProductionPlan">
+          <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="1" />
+          <End Role="ProductionPlan_ResponsibleEmployees" Type="Self.ProductionPlan_ResponsibleEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionPlan_ResponsibleEmployees">
+              <PropertyRef Name="ProductionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductRecipe_MaterialSpecification">
+          <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="1" />
+          <End Role="ProductRecipe" Type="Self.ProductRecipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductRecipe">
+              <PropertyRef Name="MaterialSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductRecipe_ProductSpecification">
+          <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="1" />
+          <End Role="ProductRecipe" Type="Self.ProductRecipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductRecipe">
+              <PropertyRef Name="ProductSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecification_MeasureUnit1">
+          <End Role="MeasureUnit" Type="Self.MeasureUnit" Multiplicity="1" />
+          <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasureUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSpecification">
+              <PropertyRef Name="WeightMeasureUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Product_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Realization_Product" Type="Self.Realization_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Realization_Product">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Product_Realization">
+          <End Role="Realization" Type="Self.Realization" Multiplicity="1" />
+          <End Role="Realization_Product" Type="Self.Realization_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Realization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Realization_Product">
+              <PropertyRef Name="RealizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_ResponsibleEmployees_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Realization_ResponsibleEmployees" Type="Self.Realization_ResponsibleEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Realization_ResponsibleEmployees">
+              <PropertyRef Name="RealizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_ResponsibleEmployees_Realization">
+          <End Role="Realization" Type="Self.Realization" Multiplicity="1" />
+          <End Role="Realization_ResponsibleEmployees" Type="Self.Realization_ResponsibleEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Realization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Realization_ResponsibleEmployees">
+              <PropertyRef Name="RealizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DBModelContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Gender" EntityType="Self.Gender" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialSpecification" EntityType="Self.MaterialSpecification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialsPurchasePlan" EntityType="Self.MaterialsPurchasePlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialsPurchasePlan_ResponsibleEmployees" EntityType="Self.MaterialsPurchasePlan_ResponsibleEmployees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification" EntityType="Self.MaterialsPurchasePlan_SupplierAndMaterialSpecification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MeasureUnit" EntityType="Self.MeasureUnit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PlanState" EntityType="Self.PlanState" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionPlan" EntityType="Self.ProductionPlan" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionPlan_Product" EntityType="Self.ProductionPlan_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductionPlan_ResponsibleEmployees" EntityType="Self.ProductionPlan_ResponsibleEmployees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductRecipe" EntityType="Self.ProductRecipe" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSpecification" EntityType="Self.ProductSpecification" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Realization" EntityType="Self.Realization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Realization_Product" EntityType="Self.Realization_Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Realization_ResponsibleEmployees" EntityType="Self.Realization_ResponsibleEmployees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Gender" Association="Self.FK_Employee_Gender">
+            <End Role="Gender" EntitySet="Gender" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_MaterialSpecification" Association="Self.FK_Material_MaterialSpecification">
+            <End Role="MaterialSpecification" EntitySet="MaterialSpecification" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_MaterialsPurchasePlan" Association="Self.FK_Material_MaterialsPurchasePlan">
+            <End Role="MaterialsPurchasePlan" EntitySet="MaterialsPurchasePlan" />
+            <End Role="Material" EntitySet="Material" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialSpecification_MeasureUnit" Association="Self.FK_MaterialSpecification_MeasureUnit">
+            <End Role="MeasureUnit" EntitySet="MeasureUnit" />
+            <End Role="MaterialSpecification" EntitySet="MaterialSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_PlanState" Association="Self.FK_MaterialsPurchasePlan_PlanState">
+            <End Role="PlanState" EntitySet="PlanState" />
+            <End Role="MaterialsPurchasePlan" EntitySet="MaterialsPurchasePlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_ResponsibleEmployees_Employee" Association="Self.FK_MaterialsPurchasePlan_ResponsibleEmployees_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="MaterialsPurchasePlan_ResponsibleEmployees" EntitySet="MaterialsPurchasePlan_ResponsibleEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_ResponsibleEmployees_MaterialsPurchasePlan" Association="Self.FK_MaterialsPurchasePlan_ResponsibleEmployees_MaterialsPurchasePlan">
+            <End Role="MaterialsPurchasePlan" EntitySet="MaterialsPurchasePlan" />
+            <End Role="MaterialsPurchasePlan_ResponsibleEmployees" EntitySet="MaterialsPurchasePlan_ResponsibleEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification" Association="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification">
+            <End Role="MaterialSpecification" EntitySet="MaterialSpecification" />
+            <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" EntitySet="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan" Association="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan">
+            <End Role="MaterialsPurchasePlan" EntitySet="MaterialsPurchasePlan" />
+            <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" EntitySet="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier" Association="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" EntitySet="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductionPlan" Association="Self.FK_Product_ProductionPlan">
+            <End Role="ProductionPlan" EntitySet="ProductionPlan" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSpecification" Association="Self.FK_Product_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionPlan_PlanState" Association="Self.FK_ProductionPlan_PlanState">
+            <End Role="PlanState" EntitySet="PlanState" />
+            <End Role="ProductionPlan" EntitySet="ProductionPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionPlan_Product_ProductionPlan" Association="Self.FK_ProductionPlan_Product_ProductionPlan">
+            <End Role="ProductionPlan" EntitySet="ProductionPlan" />
+            <End Role="ProductionPlan_Product" EntitySet="ProductionPlan_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionPlan_Product_ProductSpecification" Association="Self.FK_ProductionPlan_Product_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ProductionPlan_Product" EntitySet="ProductionPlan_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionPlan_ResponsibleEmployees_Employee" Association="Self.FK_ProductionPlan_ResponsibleEmployees_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ProductionPlan_ResponsibleEmployees" EntitySet="ProductionPlan_ResponsibleEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionPlan_ResponsibleEmployees_ProductionPlan" Association="Self.FK_ProductionPlan_ResponsibleEmployees_ProductionPlan">
+            <End Role="ProductionPlan" EntitySet="ProductionPlan" />
+            <End Role="ProductionPlan_ResponsibleEmployees" EntitySet="ProductionPlan_ResponsibleEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductRecipe_MaterialSpecification" Association="Self.FK_ProductRecipe_MaterialSpecification">
+            <End Role="MaterialSpecification" EntitySet="MaterialSpecification" />
+            <End Role="ProductRecipe" EntitySet="ProductRecipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductRecipe_ProductSpecification" Association="Self.FK_ProductRecipe_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ProductRecipe" EntitySet="ProductRecipe" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecification_MeasureUnit1" Association="Self.FK_ProductSpecification_MeasureUnit1">
+            <End Role="MeasureUnit" EntitySet="MeasureUnit" />
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Product_Product" Association="Self.FK_Realization_Product_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Realization_Product" EntitySet="Realization_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Product_Realization" Association="Self.FK_Realization_Product_Realization">
+            <End Role="Realization" EntitySet="Realization" />
+            <End Role="Realization_Product" EntitySet="Realization_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_ResponsibleEmployees_Employee" Association="Self.FK_Realization_ResponsibleEmployees_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Realization_ResponsibleEmployees" EntitySet="Realization_ResponsibleEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_ResponsibleEmployees_Realization" Association="Self.FK_Realization_ResponsibleEmployees_Realization">
+            <End Role="Realization" EntitySet="Realization" />
+            <End Role="Realization_ResponsibleEmployees" EntitySet="Realization_ResponsibleEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Salary" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="GenderId" Type="Int32" Nullable="false" />
+          <Property Name="RoleId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Gender" Relationship="Self.FK_Employee_Gender" FromRole="Employee" ToRole="Gender" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_Employee_Role" FromRole="Employee" ToRole="Role" />
+          <NavigationProperty Name="Realization_ResponsibleEmployees" Relationship="Self.FK_Realization_ResponsibleEmployees_Employee" FromRole="Employee" ToRole="Realization_ResponsibleEmployees" />
+          <NavigationProperty Name="Users" Relationship="Self.FK_User_Employee" FromRole="Employee" ToRole="User" />
+          <NavigationProperty Name="MaterialsPurchasePlans" Relationship="Self.MaterialsPurchasePlan_ResponsibleEmployees" FromRole="Employee" ToRole="MaterialsPurchasePlan" />
+          <NavigationProperty Name="ProductionPlans" Relationship="Self.ProductionPlan_ResponsibleEmployees" FromRole="Employee" ToRole="ProductionPlan" />
+        </EntityType>
+        <EntityType Name="Gender">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Gender" FromRole="Gender" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="MaterialSpecification" Type="Int32" Nullable="false" />
+          <Property Name="MaterialsPurchasePlanId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MaterialSpecification1" Relationship="Self.FK_Material_MaterialSpecification" FromRole="Material" ToRole="MaterialSpecification" />
+          <NavigationProperty Name="MaterialsPurchasePlan" Relationship="Self.FK_Material_MaterialsPurchasePlan" FromRole="Material" ToRole="MaterialsPurchasePlan" />
+        </EntityType>
+        <EntityType Name="MaterialSpecification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="MeasureUnitId" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Materials" Relationship="Self.FK_Material_MaterialSpecification" FromRole="MaterialSpecification" ToRole="Material" />
+          <NavigationProperty Name="MeasureUnit" Relationship="Self.FK_MaterialSpecification_MeasureUnit" FromRole="MaterialSpecification" ToRole="MeasureUnit" />
+          <NavigationProperty Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Relationship="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification" FromRole="MaterialSpecification" ToRole="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          <NavigationProperty Name="ProductRecipes" Relationship="Self.FK_ProductRecipe_MaterialSpecification" FromRole="MaterialSpecification" ToRole="ProductRecipe" />
+        </EntityType>
+        <EntityType Name="MaterialsPurchasePlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PlanStateId" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Materials" Relationship="Self.FK_Material_MaterialsPurchasePlan" FromRole="MaterialsPurchasePlan" ToRole="Material" />
+          <NavigationProperty Name="PlanState" Relationship="Self.FK_MaterialsPurchasePlan_PlanState" FromRole="MaterialsPurchasePlan" ToRole="PlanState" />
+          <NavigationProperty Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Relationship="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan" FromRole="MaterialsPurchasePlan" ToRole="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          <NavigationProperty Name="Employees" Relationship="Self.MaterialsPurchasePlan_ResponsibleEmployees" FromRole="MaterialsPurchasePlan" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+          <Key>
+            <PropertyRef Name="MaterialsPurchasePlanId" />
+            <PropertyRef Name="SupplierId" />
+            <PropertyRef Name="MaterialSpecificationId" />
+          </Key>
+          <Property Name="MaterialsPurchasePlanId" Type="Int32" Nullable="false" />
+          <Property Name="SupplierId" Type="Int32" Nullable="false" />
+          <Property Name="MaterialSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MaterialSpecification" Relationship="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification" FromRole="MaterialsPurchasePlan_SupplierAndMaterialSpecification" ToRole="MaterialSpecification" />
+          <NavigationProperty Name="MaterialsPurchasePlan" Relationship="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan" FromRole="MaterialsPurchasePlan_SupplierAndMaterialSpecification" ToRole="MaterialsPurchasePlan" />
+          <NavigationProperty Name="Supplier" Relationship="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier" FromRole="MaterialsPurchasePlan_SupplierAndMaterialSpecification" ToRole="Supplier" />
+        </EntityType>
+        <EntityType Name="MeasureUnit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MaterialSpecifications" Relationship="Self.FK_MaterialSpecification_MeasureUnit" FromRole="MeasureUnit" ToRole="MaterialSpecification" />
+          <NavigationProperty Name="ProductSpecifications" Relationship="Self.FK_ProductSpecification_MeasureUnit1" FromRole="MeasureUnit" ToRole="ProductSpecification" />
+        </EntityType>
+        <EntityType Name="PlanState">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MaterialsPurchasePlans" Relationship="Self.FK_MaterialsPurchasePlan_PlanState" FromRole="PlanState" ToRole="MaterialsPurchasePlan" />
+          <NavigationProperty Name="ProductionPlans" Relationship="Self.FK_ProductionPlan_PlanState" FromRole="PlanState" ToRole="ProductionPlan" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ProductSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="ProductionPlanId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductionPlan" Relationship="Self.FK_Product_ProductionPlan" FromRole="Product" ToRole="ProductionPlan" />
+          <NavigationProperty Name="ProductSpecification" Relationship="Self.FK_Product_ProductSpecification" FromRole="Product" ToRole="ProductSpecification" />
+          <NavigationProperty Name="Realization_Product" Relationship="Self.FK_Realization_Product_Product" FromRole="Product" ToRole="Realization_Product" />
+        </EntityType>
+        <EntityType Name="ProductionPlan">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="PlanStateId" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="PlanState" Relationship="Self.FK_ProductionPlan_PlanState" FromRole="ProductionPlan" ToRole="PlanState" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductionPlan" FromRole="ProductionPlan" ToRole="Product" />
+          <NavigationProperty Name="ProductionPlan_Product" Relationship="Self.FK_ProductionPlan_Product_ProductionPlan" FromRole="ProductionPlan" ToRole="ProductionPlan_Product" />
+          <NavigationProperty Name="Employees" Relationship="Self.ProductionPlan_ResponsibleEmployees" FromRole="ProductionPlan" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="ProductionPlan_Product">
+          <Key>
+            <PropertyRef Name="ProductionPlanid" />
+            <PropertyRef Name="ProductSpecificationId" />
+          </Key>
+          <Property Name="ProductionPlanid" Type="Int32" Nullable="false" />
+          <Property Name="ProductSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductionPlan" Relationship="Self.FK_ProductionPlan_Product_ProductionPlan" FromRole="ProductionPlan_Product" ToRole="ProductionPlan" />
+          <NavigationProperty Name="ProductSpecification" Relationship="Self.FK_ProductionPlan_Product_ProductSpecification" FromRole="ProductionPlan_Product" ToRole="ProductSpecification" />
+        </EntityType>
+        <EntityType Name="ProductRecipe">
+          <Key>
+            <PropertyRef Name="ProductSpecificationId" />
+            <PropertyRef Name="MaterialSpecificationId" />
+          </Key>
+          <Property Name="ProductSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="MaterialSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MaterialSpecification" Relationship="Self.FK_ProductRecipe_MaterialSpecification" FromRole="ProductRecipe" ToRole="MaterialSpecification" />
+          <NavigationProperty Name="ProductSpecification" Relationship="Self.FK_ProductRecipe_ProductSpecification" FromRole="ProductRecipe" ToRole="ProductSpecification" />
+        </EntityType>
+        <EntityType Name="ProductSpecification">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="Weight" Type="Int32" Nullable="false" />
+          <Property Name="WeightMeasureUnitId" Type="Int32" Nullable="false" />
+          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="MeasureUnit" Relationship="Self.FK_ProductSpecification_MeasureUnit1" FromRole="ProductSpecification" ToRole="MeasureUnit" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Product_ProductSpecification" FromRole="ProductSpecification" ToRole="Product" />
+          <NavigationProperty Name="ProductionPlan_Product" Relationship="Self.FK_ProductionPlan_Product_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductionPlan_Product" />
+          <NavigationProperty Name="ProductRecipes" Relationship="Self.FK_ProductRecipe_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductRecipe" />
+        </EntityType>
+        <EntityType Name="Realization">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="DateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Realization_Product" Relationship="Self.FK_Realization_Product_Realization" FromRole="Realization" ToRole="Realization_Product" />
+          <NavigationProperty Name="Realization_ResponsibleEmployees" Relationship="Self.FK_Realization_ResponsibleEmployees_Realization" FromRole="Realization" ToRole="Realization_ResponsibleEmployees" />
+        </EntityType>
+        <EntityType Name="Realization_Product">
+          <Key>
+            <PropertyRef Name="RealizationId" />
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="RealizationId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="Self.FK_Realization_Product_Product" FromRole="Realization_Product" ToRole="Product" />
+          <NavigationProperty Name="Realization" Relationship="Self.FK_Realization_Product_Realization" FromRole="Realization_Product" ToRole="Realization" />
+        </EntityType>
+        <EntityType Name="Realization_ResponsibleEmployees">
+          <Key>
+            <PropertyRef Name="RealizationId" />
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="RealizationId" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Realization_ResponsibleEmployees_Employee" FromRole="Realization_ResponsibleEmployees" ToRole="Employee" />
+          <NavigationProperty Name="Realization" Relationship="Self.FK_Realization_ResponsibleEmployees_Realization" FromRole="Realization_ResponsibleEmployees" ToRole="Realization" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Role" FromRole="Role" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Supplier">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Relationship="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier" FromRole="Supplier" ToRole="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_User_Employee" FromRole="User" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Employee_Gender">
+          <End Role="Gender" Type="Self.Gender" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Gender">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="GenderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_ResponsibleEmployees_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Realization_ResponsibleEmployees" Type="Self.Realization_ResponsibleEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Realization_ResponsibleEmployees">
+              <PropertyRef Name="RealizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_MaterialSpecification">
+          <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="MaterialSpecification" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Material_MaterialsPurchasePlan">
+          <End Role="MaterialsPurchasePlan" Type="Self.MaterialsPurchasePlan" Multiplicity="1" />
+          <End Role="Material" Type="Self.Material" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialsPurchasePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Material">
+              <PropertyRef Name="MaterialsPurchasePlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialSpecification_MeasureUnit">
+          <End Role="MeasureUnit" Type="Self.MeasureUnit" Multiplicity="1" />
+          <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasureUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialSpecification">
+              <PropertyRef Name="MeasureUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification">
+          <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Type="Self.MaterialsPurchasePlan_SupplierAndMaterialSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+              <PropertyRef Name="MaterialSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductRecipe_MaterialSpecification">
+          <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="1" />
+          <End Role="ProductRecipe" Type="Self.ProductRecipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductRecipe">
+              <PropertyRef Name="MaterialSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_PlanState">
+          <End Role="PlanState" Type="Self.PlanState" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan" Type="Self.MaterialsPurchasePlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanState">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan">
+              <PropertyRef Name="PlanStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan">
+          <End Role="MaterialsPurchasePlan" Type="Self.MaterialsPurchasePlan" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Type="Self.MaterialsPurchasePlan_SupplierAndMaterialSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialsPurchasePlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+              <PropertyRef Name="MaterialsPurchasePlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier">
+          <End Role="Supplier" Type="Self.Supplier" Multiplicity="1" />
+          <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Type="Self.MaterialsPurchasePlan_SupplierAndMaterialSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+              <PropertyRef Name="SupplierId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductSpecification_MeasureUnit1">
+          <End Role="MeasureUnit" Type="Self.MeasureUnit" Multiplicity="1" />
+          <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MeasureUnit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductSpecification">
+              <PropertyRef Name="WeightMeasureUnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionPlan_PlanState">
+          <End Role="PlanState" Type="Self.PlanState" Multiplicity="1" />
+          <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlanState">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionPlan">
+              <PropertyRef Name="PlanStateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductionPlan">
+          <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductionPlanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSpecification">
+          <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Product_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="Realization_Product" Type="Self.Realization_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Realization_Product">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionPlan_Product_ProductionPlan">
+          <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="1" />
+          <End Role="ProductionPlan_Product" Type="Self.ProductionPlan_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionPlan">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionPlan_Product">
+              <PropertyRef Name="ProductionPlanid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductionPlan_Product_ProductSpecification">
+          <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="1" />
+          <End Role="ProductionPlan_Product" Type="Self.ProductionPlan_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductionPlan_Product">
+              <PropertyRef Name="ProductSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductRecipe_ProductSpecification">
+          <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="1" />
+          <End Role="ProductRecipe" Type="Self.ProductRecipe" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductRecipe">
+              <PropertyRef Name="ProductSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_Product_Realization">
+          <End Role="Realization" Type="Self.Realization" Multiplicity="1" />
+          <End Role="Realization_Product" Type="Self.Realization_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Realization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Realization_Product">
+              <PropertyRef Name="RealizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Realization_ResponsibleEmployees_Realization">
+          <End Role="Realization" Type="Self.Realization" Multiplicity="1" />
+          <End Role="Realization_ResponsibleEmployees" Type="Self.Realization_ResponsibleEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Realization">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Realization_ResponsibleEmployees">
+              <PropertyRef Name="RealizationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MaterialsPurchasePlan_ResponsibleEmployees">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="MaterialsPurchasePlan" Type="Self.MaterialsPurchasePlan" Multiplicity="*" />
+        </Association>
+        <Association Name="ProductionPlan_ResponsibleEmployees">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Role="ProductionPlan" Type="Self.ProductionPlan" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="Self.Employee" />
+          <EntitySet Name="Genders" EntityType="Self.Gender" />
+          <EntitySet Name="Materials" EntityType="Self.Material" />
+          <EntitySet Name="MaterialSpecifications" EntityType="Self.MaterialSpecification" />
+          <EntitySet Name="MaterialsPurchasePlans" EntityType="Self.MaterialsPurchasePlan" />
+          <EntitySet Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification" EntityType="Self.MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          <EntitySet Name="MeasureUnits" EntityType="Self.MeasureUnit" />
+          <EntitySet Name="PlanStates" EntityType="Self.PlanState" />
+          <EntitySet Name="Products" EntityType="Self.Product" />
+          <EntitySet Name="ProductionPlans" EntityType="Self.ProductionPlan" />
+          <EntitySet Name="ProductionPlan_Product" EntityType="Self.ProductionPlan_Product" />
+          <EntitySet Name="ProductRecipes" EntityType="Self.ProductRecipe" />
+          <EntitySet Name="ProductSpecifications" EntityType="Self.ProductSpecification" />
+          <EntitySet Name="Realizations" EntityType="Self.Realization" />
+          <EntitySet Name="Realization_Product" EntityType="Self.Realization_Product" />
+          <EntitySet Name="Realization_ResponsibleEmployees" EntityType="Self.Realization_ResponsibleEmployees" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="Suppliers" EntityType="Self.Supplier" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_Employee_Gender" Association="Self.FK_Employee_Gender">
+            <End Role="Gender" EntitySet="Genders" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role" Association="Self.FK_Employee_Role">
+            <End Role="Role" EntitySet="Roles" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_ResponsibleEmployees_Employee" Association="Self.FK_Realization_ResponsibleEmployees_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Realization_ResponsibleEmployees" EntitySet="Realization_ResponsibleEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Employee" Association="Self.FK_User_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_MaterialSpecification" Association="Self.FK_Material_MaterialSpecification">
+            <End Role="MaterialSpecification" EntitySet="MaterialSpecifications" />
+            <End Role="Material" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Material_MaterialsPurchasePlan" Association="Self.FK_Material_MaterialsPurchasePlan">
+            <End Role="MaterialsPurchasePlan" EntitySet="MaterialsPurchasePlans" />
+            <End Role="Material" EntitySet="Materials" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialSpecification_MeasureUnit" Association="Self.FK_MaterialSpecification_MeasureUnit">
+            <End Role="MeasureUnit" EntitySet="MeasureUnits" />
+            <End Role="MaterialSpecification" EntitySet="MaterialSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification" Association="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification">
+            <End Role="MaterialSpecification" EntitySet="MaterialSpecifications" />
+            <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" EntitySet="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductRecipe_MaterialSpecification" Association="Self.FK_ProductRecipe_MaterialSpecification">
+            <End Role="MaterialSpecification" EntitySet="MaterialSpecifications" />
+            <End Role="ProductRecipe" EntitySet="ProductRecipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_PlanState" Association="Self.FK_MaterialsPurchasePlan_PlanState">
+            <End Role="PlanState" EntitySet="PlanStates" />
+            <End Role="MaterialsPurchasePlan" EntitySet="MaterialsPurchasePlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan" Association="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialsPurchasePlan">
+            <End Role="MaterialsPurchasePlan" EntitySet="MaterialsPurchasePlans" />
+            <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" EntitySet="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier" Association="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier">
+            <End Role="Supplier" EntitySet="Suppliers" />
+            <End Role="MaterialsPurchasePlan_SupplierAndMaterialSpecification" EntitySet="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSpecification_MeasureUnit1" Association="Self.FK_ProductSpecification_MeasureUnit1">
+            <End Role="MeasureUnit" EntitySet="MeasureUnits" />
+            <End Role="ProductSpecification" EntitySet="ProductSpecifications" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionPlan_PlanState" Association="Self.FK_ProductionPlan_PlanState">
+            <End Role="PlanState" EntitySet="PlanStates" />
+            <End Role="ProductionPlan" EntitySet="ProductionPlans" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductionPlan" Association="Self.FK_Product_ProductionPlan">
+            <End Role="ProductionPlan" EntitySet="ProductionPlans" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSpecification" Association="Self.FK_Product_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecifications" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Product_Product" Association="Self.FK_Realization_Product_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Realization_Product" EntitySet="Realization_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionPlan_Product_ProductionPlan" Association="Self.FK_ProductionPlan_Product_ProductionPlan">
+            <End Role="ProductionPlan" EntitySet="ProductionPlans" />
+            <End Role="ProductionPlan_Product" EntitySet="ProductionPlan_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductionPlan_Product_ProductSpecification" Association="Self.FK_ProductionPlan_Product_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecifications" />
+            <End Role="ProductionPlan_Product" EntitySet="ProductionPlan_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductRecipe_ProductSpecification" Association="Self.FK_ProductRecipe_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecifications" />
+            <End Role="ProductRecipe" EntitySet="ProductRecipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_Product_Realization" Association="Self.FK_Realization_Product_Realization">
+            <End Role="Realization" EntitySet="Realizations" />
+            <End Role="Realization_Product" EntitySet="Realization_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Realization_ResponsibleEmployees_Realization" Association="Self.FK_Realization_ResponsibleEmployees_Realization">
+            <End Role="Realization" EntitySet="Realizations" />
+            <End Role="Realization_ResponsibleEmployees" EntitySet="Realization_ResponsibleEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="MaterialsPurchasePlan_ResponsibleEmployees" Association="Self.MaterialsPurchasePlan_ResponsibleEmployees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="MaterialsPurchasePlan" EntitySet="MaterialsPurchasePlans" />
+          </AssociationSet>
+          <AssociationSet Name="ProductionPlan_ResponsibleEmployees" Association="Self.ProductionPlan_ResponsibleEmployees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ProductionPlan" EntitySet="ProductionPlans" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DBModelContainer" CdmEntityContainer="DBEntities">
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="DBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="GenderId" ColumnName="GenderId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genders">
+            <EntityTypeMapping TypeName="DBModel.Gender">
+              <MappingFragment StoreEntitySet="Gender">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Materials">
+            <EntityTypeMapping TypeName="DBModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MaterialSpecification" ColumnName="MaterialSpecification" />
+                <ScalarProperty Name="MaterialsPurchasePlanId" ColumnName="MaterialsPurchasePlanId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialSpecifications">
+            <EntityTypeMapping TypeName="DBModel.MaterialSpecification">
+              <MappingFragment StoreEntitySet="MaterialSpecification">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="MeasureUnitId" ColumnName="MeasureUnitId" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialsPurchasePlans">
+            <EntityTypeMapping TypeName="DBModel.MaterialsPurchasePlan">
+              <MappingFragment StoreEntitySet="MaterialsPurchasePlan">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlanStateId" ColumnName="PlanStateId" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+            <EntityTypeMapping TypeName="DBModel.MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+              <MappingFragment StoreEntitySet="MaterialsPurchasePlan_SupplierAndMaterialSpecification">
+                <ScalarProperty Name="MaterialsPurchasePlanId" ColumnName="MaterialsPurchasePlanId" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="MaterialSpecificationId" ColumnName="MaterialSpecificationId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MeasureUnits">
+            <EntityTypeMapping TypeName="DBModel.MeasureUnit">
+              <MappingFragment StoreEntitySet="MeasureUnit">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PlanStates">
+            <EntityTypeMapping TypeName="DBModel.PlanState">
+              <MappingFragment StoreEntitySet="PlanState">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="DBModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ProductSpecificationId" ColumnName="ProductSpecificationId" />
+                <ScalarProperty Name="ProductionPlanId" ColumnName="ProductionPlanId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductionPlans">
+            <EntityTypeMapping TypeName="DBModel.ProductionPlan">
+              <MappingFragment StoreEntitySet="ProductionPlan">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PlanStateId" ColumnName="PlanStateId" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductionPlan_Product">
+            <EntityTypeMapping TypeName="DBModel.ProductionPlan_Product">
+              <MappingFragment StoreEntitySet="ProductionPlan_Product">
+                <ScalarProperty Name="ProductionPlanid" ColumnName="ProductionPlanid" />
+                <ScalarProperty Name="ProductSpecificationId" ColumnName="ProductSpecificationId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductRecipes">
+            <EntityTypeMapping TypeName="DBModel.ProductRecipe">
+              <MappingFragment StoreEntitySet="ProductRecipe">
+                <ScalarProperty Name="ProductSpecificationId" ColumnName="ProductSpecificationId" />
+                <ScalarProperty Name="MaterialSpecificationId" ColumnName="MaterialSpecificationId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductSpecifications">
+            <EntityTypeMapping TypeName="DBModel.ProductSpecification">
+              <MappingFragment StoreEntitySet="ProductSpecification">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="WeightMeasureUnitId" ColumnName="WeightMeasureUnitId" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Realizations">
+            <EntityTypeMapping TypeName="DBModel.Realization">
+              <MappingFragment StoreEntitySet="Realization">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateTime" ColumnName="DateTime" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Realization_Product">
+            <EntityTypeMapping TypeName="DBModel.Realization_Product">
+              <MappingFragment StoreEntitySet="Realization_Product">
+                <ScalarProperty Name="RealizationId" ColumnName="RealizationId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Realization_ResponsibleEmployees">
+            <EntityTypeMapping TypeName="DBModel.Realization_ResponsibleEmployees">
+              <MappingFragment StoreEntitySet="Realization_ResponsibleEmployees">
+                <ScalarProperty Name="RealizationId" ColumnName="RealizationId" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DBModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="DBModel.Supplier">
+              <MappingFragment StoreEntitySet="Supplier">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="DBModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MaterialsPurchasePlan_ResponsibleEmployees" TypeName="DBModel.MaterialsPurchasePlan_ResponsibleEmployees" StoreEntitySet="MaterialsPurchasePlan_ResponsibleEmployees">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="Id" ColumnName="EmployeeId" />
+            </EndProperty>
+            <EndProperty Name="MaterialsPurchasePlan">
+              <ScalarProperty Name="Id" ColumnName="MaterialsPurchasePlanId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="ProductionPlan_ResponsibleEmployees" TypeName="DBModel.ProductionPlan_ResponsibleEmployees" StoreEntitySet="ProductionPlan_ResponsibleEmployees">
+            <EndProperty Name="Employee">
+              <ScalarProperty Name="Id" ColumnName="EmployeeId" />
+            </EndProperty>
+            <EndProperty Name="ProductionPlan">
+              <ScalarProperty Name="Id" ColumnName="ProductionPlanId" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

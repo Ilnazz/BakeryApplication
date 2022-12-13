@@ -1,0 +1,77 @@
+﻿<Window x:Class="Bakery.Views.UserAuthView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Bakery.Views"
+             xmlns:viewmodels="clr-namespace:Bakery.ViewModels"
+             mc:Ignorable="d"
+             Title="Авторизация"
+             SizeToContent="WidthAndHeight"
+             WindowStartupLocation="CenterScreen">
+    <Window.DataContext>
+        <viewmodels:UserAuthViewModel/>
+    </Window.DataContext>
+
+    <StackPanel
+        Margin="5">
+        <Label
+            Target="{Binding ElementName=TBLogin}"
+            Content="Логин:"
+            Margin="0,0,0,5"/>
+        <TextBox
+            Text="{Binding Login,
+                           UpdateSourceTrigger=PropertyChanged}"
+            x:Name="TBLogin"
+            Margin="0,0,0,5"
+            MaxLength="50"/>
+
+        <Label
+            Target="{Binding ElementName=TBPassword}"
+            Content="Пароль:"
+            Margin="0,0,0,5"/>
+        <TextBox
+            Text="{Binding Password,
+                           UpdateSourceTrigger=PropertyChanged}"
+            x:Name="TBPassword"
+            Margin="0,0,0,5"
+            MaxLength="50"/>
+
+        <StackPanel
+            Orientation="Horizontal"
+            Margin="0,0,0,5">
+            <CheckBox
+                IsChecked="{Binding RememberUser,
+                                    UpdateSourceTrigger=PropertyChanged}"
+                x:Name="CBRememberUser"
+                VerticalAlignment="Center"/>
+            <Label
+                Target="{Binding ElementName=CBRememberUser}"
+                Content="Запомнить меня"/>
+        </StackPanel>
+
+        <Button
+            Command="{Binding AuthorizeCommand}"
+            Content="Войти"
+            Margin="0,0,0,5"/>
+
+        <StackPanel
+            Visibility="{Binding TimerVisibility}"
+            Margin="0,0,0,5">
+            <TextBlock
+                Text="{Binding TimerSeconds, StringFormat={}Можно войти через: {0} секунд}"
+                FontSize="14"
+                Foreground="Red"/>
+        </StackPanel>
+
+        <TextBlock
+            Text="Или"
+            TextAlignment="Center"
+            FontSize="12"
+            Margin="0,0,0,5"/>
+
+        <Button
+            Command="{Binding NavigateToRegistrationWindowCommand}"
+            Content="Зарегистрироваться"/>
+    </StackPanel>
+</Window>
