@@ -108,7 +108,7 @@ namespace Bakery.ViewModels
         #region Commands
         public ICommand RegisterCommand { get; }
 
-        private void Register(object registrationWindow)
+        private void Register(object parameter)
         {
             NormalizeFileds();
 
@@ -173,7 +173,8 @@ namespace Bakery.ViewModels
 
             MessageBox.Show("Пользователь зарегистрирован");
 
-            (registrationWindow as Window).Close();
+            var currentWindow = parameter as Window;
+            currentWindow.Close();
         }
 
         private bool CanRegister(object parameter) => AreAllFieldsFilledIn() == true;

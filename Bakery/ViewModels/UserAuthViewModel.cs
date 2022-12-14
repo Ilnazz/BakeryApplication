@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Windows.Threading;
 using System.Windows;
 using Bakery.Views;
+using Bakery.Views.Windows;
 
 namespace Bakery.ViewModels
 {
@@ -38,7 +39,7 @@ namespace Bakery.ViewModels
             set => Set(ref _password, value);
         }
 
-        private bool _rememberUser = false;
+        private bool _rememberUser = true;
         public bool RememberUser
         {
             get => _rememberUser;
@@ -145,7 +146,7 @@ namespace Bakery.ViewModels
         #region Authorize() and CanAuthorize()
         public ICommand AuthorizeCommand { get; }
 
-        private void Authorize(object window)
+        private void Authorize(object parameter)
         {
             if (string.IsNullOrWhiteSpace(_login))
             {
@@ -188,10 +189,11 @@ namespace Bakery.ViewModels
             else
                 ResetRememberedUserLoginAndPassword();
 
-            MessageBox.Show("Пользователь авторизован");
+            var mainWindow = new MainWindow();
+            mainWindow.Show();
 
-            // navigate to mainwindow with pages
-            //(window as Window).Close();
+            var currentWindow = parameter as Window;
+            currentWindow.Close();
         }
 
         private bool CanAuthorize(object parameter)
@@ -205,7 +207,7 @@ namespace Bakery.ViewModels
 
         private void NavigateToRegistrationWindow(object parameter)
         {
-            var registrationWindow = new UserRegView();
+            var registrationWindow = new UserRegWindow();
             registrationWindow.ShowDialog();
         }
         #endregion

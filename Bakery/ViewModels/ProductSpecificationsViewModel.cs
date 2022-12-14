@@ -9,11 +9,11 @@ namespace Bakery.ViewModels
 {
     public class ProductSpecificationsViewModel : ViewModelBase
     {
+        #region Constructor
         public ProductSpecificationsViewModel()
         {
 
         }
-
-
+        #endregion
     }
 }

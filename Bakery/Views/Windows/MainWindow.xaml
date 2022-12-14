@@ -4,9 +4,99 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Bakery.Views"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        xmlns:views="clr-namespace:Bakery.Views"
+        xmlns:viewmodels="clr-namespace:Bakery.ViewModels"
+        mc:Ignorable="d" d:Width="800" d:Height="450"
+        Title="Основная страница"
+        WindowStartupLocation="CenterScreen"
+        Name="Window">
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+    
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:ProductSpecificationsViewModel}">
+            <views:ProductSpecificationsView/>
+        </DataTemplate>
+    </Window.Resources>
+
     <Grid>
+        <Grid.RowDefinitions>
+            
+        </Grid.RowDefinitions>
         
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="Auto"/>
+            <ColumnDefinition
+                Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border
+            Grid.Row="0"
+            Grid.Column="0"
+            BorderBrush="Gray"
+            Background="WhiteSmoke"
+            BorderThickness="1"
+            CornerRadius="5"
+            Margin="5">
+            <StackPanel
+                Margin="5"
+                Background="WhiteSmoke">
+                <Border
+                    BorderBrush="RoyalBlue"
+                    Background="RoyalBlue"
+                    Padding="5"
+                    CornerRadius="2.5">
+                    <TextBlock
+                        Text="Навигация"
+                        Background="RoyalBlue"
+                        Foreground="White"
+                        HorizontalAlignment="Center"/>
+                </Border>
+                
+                <ItemsControl
+                    Margin="5">
+                    <TextBlock
+                        Margin="0,0,0,5">
+                        <Hyperlink
+                            Command="{Binding NavigateToOtherViewModelCommand}"
+                            CommandParameter="Ассортимент продукции">
+                            Ассортимент продукции
+                        </Hyperlink>
+                    </TextBlock>
+                </ItemsControl>
+            </StackPanel>
+        </Border>
+
+        <Border
+            Grid.Row="0"
+            Grid.Column="1"
+            BorderBrush="Gray"
+            Background="WhiteSmoke"
+            BorderThickness="1"
+            CornerRadius="5"
+            Margin="0,5,5,5">
+            <StackPanel>
+                <StackPanel
+                    Margin="5"
+                    Background="WhiteSmoke">
+                    <Border
+                        BorderBrush="RoyalBlue"
+                        Background="RoyalBlue"
+                        Padding="5"
+                        CornerRadius="2.5">
+                        <TextBlock
+                            Text="Рабочее пространство"
+                            Background="RoyalBlue"
+                            Foreground="White"
+                            HorizontalAlignment="Center"/>
+                    </Border>
+                </StackPanel>
+
+                <ContentControl Content="{Binding CurrentViewModel}"
+                                Margin="5,0,5,5"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Window>

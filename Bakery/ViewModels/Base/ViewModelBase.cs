@@ -12,7 +12,7 @@ namespace Bakery.ViewModels.Base
 
         protected virtual bool Set<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
-            if (field.Equals(value))
+            if (field?.Equals(value) ?? false)
                 return false;
             field = value;
             NotifyPropertyChanged(propertyName);

@@ -8,7 +8,8 @@
              mc:Ignorable="d"
              Title="Авторизация"
              SizeToContent="WidthAndHeight"
-             WindowStartupLocation="CenterScreen">
+             WindowStartupLocation="CenterScreen"
+             Name="Window">
     <Window.DataContext>
         <viewmodels:UserAuthViewModel/>
     </Window.DataContext>
@@ -52,6 +53,7 @@
 
         <Button
             Command="{Binding AuthorizeCommand}"
+            CommandParameter="{Binding ElementName=Window}"
             Content="Войти"
             Margin="0,0,0,5"/>
 

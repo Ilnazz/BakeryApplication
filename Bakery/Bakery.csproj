@@ -139,14 +139,15 @@
     </Compile>
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ProductSpecificationsViewModel.cs" />
     <Compile Include="ViewModels\UserAuthViewModel.cs" />
     <Compile Include="ViewModels\UserRegViewModel.cs" />
+    <Compile Include="Views\ProductSpecificationsView.xaml.cs">
+      <DependentUpon>ProductSpecificationsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Pages\ProductSpecificationsPage.xaml.cs">
-      <DependentUpon>ProductSpecificationsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\UserAuthWindow.xaml.cs">
       <DependentUpon>UserAuthWindow.xaml</DependentUpon>
@@ -162,11 +163,31 @@
     <Compile Include="DataTypes\Enums\MeasureUnit.cs" />
     <Compile Include="DataTypes\Enums\PlanState.cs" />
     <Compile Include="DataTypes\Enums\EmployeeRole.cs" />
-    <Page Include="Views\Windows\MainWindow.xaml">
+    <Page Include="Styles\ButtonStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Pages\ProductSpecificationsPage.xaml">
+    <Page Include="Styles\CommonStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\LabelStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TextBlockStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TextBoxStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ProductSpecificationsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
