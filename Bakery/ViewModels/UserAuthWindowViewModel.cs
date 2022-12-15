@@ -16,7 +16,7 @@ namespace Bakery.ViewModels
         public UserAuthWindowViewModel()
         {
             AuthorizeCommand = new RelayCommand(Authorize, CanAuthorize);
-            NavigateToRegistrationWindowCommand = new RelayCommand(NavigateToRegistrationWindow);
+            OpenRegistrationWindowCommand = new RelayCommand(OpenRegistrationWindow);
 
             SetRememberedUserLoginAndPassword();
 
@@ -24,6 +24,7 @@ namespace Bakery.ViewModels
         }
         #endregion
 
+        //TODO: валидация данных при заполении
         #region Properties
         private string _login = "";
         public string Login
@@ -148,6 +149,7 @@ namespace Bakery.ViewModels
 
         private void Authorize(object parameter)
         {
+            //TODO: разделить на методы
             if (string.IsNullOrWhiteSpace(_login))
             {
                 MessageBox.Show("Логин не может быть пустым");
@@ -197,6 +199,7 @@ namespace Bakery.ViewModels
 
         private void OpenMainWindow()
         {
+            //TODO: разделить на методы
             MainWindow mainWindow = new MainWindow();
 
             var mainWindowViewModel = new MainWindowViewModel();
@@ -226,15 +229,16 @@ namespace Bakery.ViewModels
                 && _isTimerWorking == false;
         #endregion
 
-        #region NavigateToRegistrationWindow()
-        public ICommand NavigateToRegistrationWindowCommand { get; }
+        #region Opening user registration window
+        public ICommand OpenRegistrationWindowCommand { get; }
 
-        private void NavigateToRegistrationWindow(object parameter)
+        private void OpenRegistrationWindow(object parameter)
         {
             var registrationWindow = new UserRegWindow();
             registrationWindow.ShowDialog();
         }
         #endregion
+
         #endregion
 
         #region Remember user login and password methods

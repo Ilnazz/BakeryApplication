@@ -47,6 +47,7 @@ namespace Bakery.ViewModels
                 foreach (WorkspaceViewModel workspace in e.OldItems)
                     workspace.Closing -= OnWorkspaceClosing;
 
+            //TODO: авто выбор таб панели при добавлении 
             SelectedWorkspaceIndex = _workspaces.Count > 0 ? _workspaces.Count : -1;
         }
 

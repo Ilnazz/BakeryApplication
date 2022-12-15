@@ -17,6 +17,7 @@ namespace Bakery.ViewModels
         }
         #endregion
 
+        //TODO: валидация данных при регистрации
         #region Properties
         private string _surname = "";
         public string Surname
@@ -106,10 +107,13 @@ namespace Bakery.ViewModels
         */
 
         #region Commands
+
+        #region Registration
         public ICommand RegisterCommand { get; }
 
         private void Register(object parameter)
         {
+            //TODO: разбить на методы
             NormalizeFileds();
 
             if (_password != _passwordConfirmation)
@@ -178,7 +182,11 @@ namespace Bakery.ViewModels
         }
 
         private bool CanRegister(object parameter) => AreAllFieldsFilledIn() == true;
+        #endregion
 
+        #endregion
+
+        #region Help methods
         private bool AreAllFieldsFilledIn()
             => _surname != ""
                 && _name != ""
