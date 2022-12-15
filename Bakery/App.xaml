@@ -6,11 +6,14 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles/CommonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/ButtonStyle.xaml"/>
-                <ResourceDictionary Source="Styles/TextBlockStyle.xaml"/>
-                <ResourceDictionary Source="Styles/TextBoxStyle.xaml"/>
-                <ResourceDictionary Source="Styles/LabelStyle.xaml"/>
+                <!-- Styles -->
+                <ResourceDictionary Source="Resources/Styles/CommonStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/ButtonStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/TextBlockStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/TextBoxStyle.xaml"/>
+                <ResourceDictionary Source="Resources/Styles/LabelStyle.xaml"/>
+                <!-- Images -->
+                <ResourceDictionary Source="Resources/BitmapImages.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

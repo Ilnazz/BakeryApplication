@@ -1,4 +1,6 @@
 ﻿using Bakery.Models;
+using Bakery.ViewModels;
+using Bakery.Views.Windows;
 using System.Windows;
 
 namespace Bakery

@@ -3,21 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Bakery.Views"
-        xmlns:views="clr-namespace:Bakery.Views"
+        xmlns:local="clr-namespace:Bakery.Views.Workspaces"
+        xmlns:views="clr-namespace:Bakery.Views.Workspaces"
         xmlns:viewmodels="clr-namespace:Bakery.ViewModels"
         mc:Ignorable="d" d:Width="800" d:Height="450"
         Title="Основная страница"
-        WindowStartupLocation="CenterScreen"
-        Name="Window">
-    <Window.DataContext>
-        <viewmodels:MainViewModel/>
-    </Window.DataContext>
+        WindowStartupLocation="CenterScreen">
     
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewmodels:ProductSpecificationsViewModel}">
-            <views:ProductSpecificationsView/>
-        </DataTemplate>
+        <ResourceDictionary Source="../../Resources/ViewResources/MainWindow/MainWindowViewResources.xaml"/>
     </Window.Resources>
 
     <Grid>
@@ -54,17 +48,10 @@
                         Foreground="White"
                         HorizontalAlignment="Center"/>
                 </Border>
-                
+
                 <ItemsControl
-                    Margin="5">
-                    <TextBlock
-                        Margin="0,0,0,5">
-                        <Hyperlink
-                            Command="{Binding NavigateToOtherViewModelCommand}"
-                            CommandParameter="Ассортимент продукции">
-                            Ассортимент продукции
-                        </Hyperlink>
-                    </TextBlock>
+                    ItemsSource="{Binding NavigationCommands}"
+                    ItemTemplate="{Binding Source={StaticResource CommandHyperlinkTemplate}}">
                 </ItemsControl>
             </StackPanel>
         </Border>
@@ -94,8 +81,26 @@
                     </Border>
                 </StackPanel>
 
-                <ContentControl Content="{Binding CurrentViewModel}"
-                                Margin="5,0,5,5"/>
+                <TabControl
+                    x:Name="WorkspacesTabControl"
+                    ItemsSource="{Binding Workspaces}"
+                    ItemTemplate="{Binding Source={StaticResource ClosableTabItemTemplate}}"
+                    SelectedIndex="{Binding SelectedWorkspaceIndex}"
+                    Margin="5,0,5,5">
+                    <TabControl.Style>
+                        <Style TargetType="TabControl">
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding SelectedWorkspaceIndex}"
+                                             Value="-1">
+                                    <Setter
+                                        Property="Visibility"
+                                        Value="Collapsed"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TabControl.Style>
+                </TabControl>
             </StackPanel>
         </Border>
     </Grid>

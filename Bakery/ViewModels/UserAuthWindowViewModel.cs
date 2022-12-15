@@ -10,10 +10,10 @@ using Bakery.Views.Windows;
 
 namespace Bakery.ViewModels
 {
-    public class UserAuthViewModel : ViewModelBase
+    public class UserAuthWindowViewModel : ViewModelBase
     {
         #region Constructor
-        public UserAuthViewModel()
+        public UserAuthWindowViewModel()
         {
             AuthorizeCommand = new RelayCommand(Authorize, CanAuthorize);
             NavigateToRegistrationWindowCommand = new RelayCommand(NavigateToRegistrationWindow);
@@ -45,13 +45,12 @@ namespace Bakery.ViewModels
             get => _rememberUser;
             set => Set(ref _rememberUser, value);
         }
-        
         #endregion
 
         #region Timer
         private readonly DispatcherTimer _timer = new DispatcherTimer();
 
-        #region Properties
+        #region Timer Properties
         private const int MAX_ATTEMPTS_NUMBER = 3;
         private const int TIMER_TOTAL_SECONDS = 60;
         
@@ -77,7 +76,6 @@ namespace Bakery.ViewModels
         }
 
         private int _authorizationAttemptNumber = MAX_ATTEMPTS_NUMBER;
-
         #endregion
 
         #region Timer methods
@@ -140,10 +138,12 @@ namespace Bakery.ViewModels
             }
         }
         #endregion
+
         #endregion
 
         #region Commands
-        #region Authorize() and CanAuthorize()
+
+        #region Authorization
         public ICommand AuthorizeCommand { get; }
 
         private void Authorize(object parameter)
@@ -168,7 +168,7 @@ namespace Bakery.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка: {ex.Message}");
+                    MessageBox.Show($"Ошибка при работе с базой данных: {ex.Message}");
                     return;
                 }
             }
@@ -189,11 +189,35 @@ namespace Bakery.ViewModels
             else
                 ResetRememberedUserLoginAndPassword();
 
-            var mainWindow = new MainWindow();
-            mainWindow.Show();
+            OpenMainWindow();
 
             var currentWindow = parameter as Window;
             currentWindow.Close();
+        }
+
+        private void OpenMainWindow()
+        {
+            MainWindow mainWindow = new MainWindow();
+
+            var mainWindowViewModel = new MainWindowViewModel();
+
+            mainWindow.DataContext = mainWindowViewModel;
+            
+            mainWindow.Closing += (sender, e) =>
+            {
+                if (mainWindowViewModel.CloseCommand.CanExecute(null) == false)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+
+                var authWindow = new UserAuthWindow();
+                authWindow.Show();
+            };
+
+            mainWindowViewModel.Closing += delegate { mainWindow.Close(); };
+            
+            mainWindow.Show();
         }
 
         private bool CanAuthorize(object parameter)

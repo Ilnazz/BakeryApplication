@@ -8,10 +8,10 @@ using System;
 
 namespace Bakery.ViewModels
 {
-    public class UserRegViewModel : ViewModelBase
+    public class UserRegWindowViewModel : ViewModelBase
     {
         #region Constructor
-        public UserRegViewModel()
+        public UserRegWindowViewModel()
         {
             RegisterCommand = new RelayCommand(Register, CanRegister);
         }
@@ -127,7 +127,7 @@ namespace Bakery.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка: {ex.Message}");
+                    MessageBox.Show($"Ошибка при работе с базой данных: {ex.Message}");
                     return;
                 }
             }

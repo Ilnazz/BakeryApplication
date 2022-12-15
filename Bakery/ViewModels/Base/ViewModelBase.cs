@@ -6,6 +6,8 @@ namespace Bakery.ViewModels.Base
 {
     public abstract class ViewModelBase : INotifyPropertyChanged, IDisposable
     {
+        public string DisplayTitle { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
