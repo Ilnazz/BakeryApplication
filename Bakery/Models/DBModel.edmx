@@ -423,7 +423,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProductSpecification_MeasureUnit1">
+        <Association Name="FK_ProductSpecification_MeasureUnit">
           <End Role="MeasureUnit" Type="Self.MeasureUnit" Multiplicity="1" />
           <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="*" />
           <ReferentialConstraint>
@@ -597,7 +597,7 @@
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="ProductRecipe" EntitySet="ProductRecipe" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductSpecification_MeasureUnit1" Association="Self.FK_ProductSpecification_MeasureUnit1">
+          <AssociationSet Name="FK_ProductSpecification_MeasureUnit" Association="Self.FK_ProductSpecification_MeasureUnit">
             <End Role="MeasureUnit" EntitySet="MeasureUnit" />
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
           </AssociationSet>
@@ -630,7 +630,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Surname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Patronymic" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
@@ -666,7 +666,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MeasureUnitId" Type="Int32" Nullable="false" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Materials" Relationship="Self.FK_Material_MaterialSpecification" FromRole="MaterialSpecification" ToRole="Material" />
@@ -768,7 +768,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
@@ -822,7 +822,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Relationship="Self.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_Supplier" FromRole="Supplier" ToRole="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
         </EntityType>
@@ -830,7 +830,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeId" Type="Int32" Nullable="false" />
           <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />

@@ -8,6 +8,7 @@ namespace Bakery.ViewModels.Base
     {
         public string DisplayTitle { get; set; }
 
+        #region Property changed notify functional
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -20,9 +21,9 @@ namespace Bakery.ViewModels.Base
             NotifyPropertyChanged(propertyName);
             return true;
         }
+        #endregion
 
-        public void Dispose() => Dispose(true);
-
+        #region Disposing
         private bool _isDisposed;
         protected virtual void Dispose(bool disposing)
         {
@@ -31,5 +32,8 @@ namespace Bakery.ViewModels.Base
             _isDisposed = true;
             // Освобождение управляемых ресурсов
         }
+        
+        public void Dispose() => Dispose(true);
+        #endregion
     }
 }

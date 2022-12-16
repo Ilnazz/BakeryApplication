@@ -1,9 +1,8 @@
-﻿using Bakery.ViewModels.Base;
-using Bakery.Views.Windows;
+﻿using Bakery.Models;
+using Bakery.ViewModels.Base;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
@@ -15,48 +14,30 @@ namespace Bakery.ViewModels
         #region Constructor
         public MainWindowViewModel()
         {
-            _workspaces.CollectionChanged += OnWorkspacesChanged;
-
-            NavigateCommand = new RelayCommand(Navigate, CanNavigate);
+            NavigateCommand = new RelayCommand(Navigate);
 
             NavigationCommands = new List<CommandViewModel>()
             {
                 new CommandViewModel("Спецификации продуктов", NavigateCommand),
             };
+
+            Workspaces.CollectionChanged += (s, e) =>
+            {
+                SelectedWorkspaceIndex = Workspaces.Count != 0 ? Workspaces.Count - 1 : -1;
+            };
         }
         #endregion
 
         #region Workspaces
-        private readonly ObservableCollection<WorkspaceViewModel> _workspaces = new ObservableCollection<WorkspaceViewModel>();
-        public ObservableCollection<WorkspaceViewModel> Workspaces { get => _workspaces; }
+        public ObservableCollection<WorkspaceViewModel> Workspaces { get => WorkspacesModel.Workspaces; }
 
-        private int _selectedWorkspaceIndex = -1;
+        private int _selectedWorkspaceIndex;
         public int SelectedWorkspaceIndex
         {
             get => _selectedWorkspaceIndex;
             set => Set(ref _selectedWorkspaceIndex, value);
         }
-
-        private void OnWorkspacesChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null && e.NewItems.Count != 0)
-                foreach (WorkspaceViewModel workspace in e.NewItems)
-                    workspace.Closing += OnWorkspaceClosing;
-
-            if (e.OldItems != null && e.OldItems.Count != 0)
-                foreach (WorkspaceViewModel workspace in e.OldItems)
-                    workspace.Closing -= OnWorkspaceClosing;
-
-            //TODO: авто выбор таб панели при добавлении 
-            SelectedWorkspaceIndex = _workspaces.Count > 0 ? _workspaces.Count : -1;
-        }
-
-        private void OnWorkspaceClosing(object sender, EventArgs e)
-        {
-            _workspaces.Remove(sender as WorkspaceViewModel);
-        }
         #endregion
-
 
         #region Commands
 
@@ -71,17 +52,12 @@ namespace Bakery.ViewModels
             switch (viewModelTitle)
             {
                 case "Спецификации продуктов":
-                    _workspaces.Add(new ProductSpecificationsViewModel());
+                    var prodSpecVM = new ProductSpecificationsViewModel();
+                    Workspaces.Add(prodSpecVM);
                     break;
                 default:
                     throw new ArgumentException();
             }
-            
-        }
-
-        private bool CanNavigate(object parameter)
-        {
-            return true;
         }
         #endregion
 

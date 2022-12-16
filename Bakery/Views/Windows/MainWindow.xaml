@@ -6,20 +6,18 @@
         xmlns:local="clr-namespace:Bakery.Views.Workspaces"
         xmlns:views="clr-namespace:Bakery.Views.Workspaces"
         xmlns:viewmodels="clr-namespace:Bakery.ViewModels"
-        mc:Ignorable="d" d:Width="800" d:Height="450"
+        mc:Ignorable="d" Width="1075" Height="600"
         Title="Основная страница"
         WindowStartupLocation="CenterScreen">
     
     <Window.Resources>
-        <ResourceDictionary Source="../../Resources/ViewResources/MainWindow/MainWindowViewResources.xaml"/>
+        <ResourceDictionary Source="../../Resources/Templates/MainWindowViewTemplates.xaml"/>
     </Window.Resources>
 
     <Grid>
-        <Grid.RowDefinitions>
-            
-        </Grid.RowDefinitions>
-        
         <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="Auto"/>
             <ColumnDefinition
                 Width="Auto"/>
             <ColumnDefinition
@@ -33,7 +31,7 @@
             Background="WhiteSmoke"
             BorderThickness="1"
             CornerRadius="5"
-            Margin="5">
+            Margin="5,5,0,5">
             <StackPanel
                 Margin="5"
                 Background="WhiteSmoke">
@@ -56,16 +54,31 @@
             </StackPanel>
         </Border>
 
-        <Border
+        <GridSplitter
             Grid.Row="0"
             Grid.Column="1"
+            HorizontalAlignment="Center"
+            Width="3"
+            Background="Gainsboro"
+            BorderBrush="Black"
+            BorderThickness="0.5"
+            Margin="10, 5"/>
+
+        <Border
+            Grid.Row="0"
+            Grid.Column="2"
             BorderBrush="Gray"
             Background="WhiteSmoke"
             BorderThickness="1"
             CornerRadius="5"
             Margin="0,5,5,5">
-            <StackPanel>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
                 <StackPanel
+                    Grid.Row="0"
                     Margin="5"
                     Background="WhiteSmoke">
                     <Border
@@ -82,16 +95,16 @@
                 </StackPanel>
 
                 <TabControl
-                    x:Name="WorkspacesTabControl"
                     ItemsSource="{Binding Workspaces}"
                     ItemTemplate="{Binding Source={StaticResource ClosableTabItemTemplate}}"
                     SelectedIndex="{Binding SelectedWorkspaceIndex}"
-                    Margin="5,0,5,5">
+                    Margin="5,0,5,5"
+                    Grid.Row="1">
                     <TabControl.Style>
                         <Style TargetType="TabControl">
                             <Setter Property="Visibility" Value="Visible"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedWorkspaceIndex}"
+                                <DataTrigger Binding="{Binding SelectedIndex}"
                                              Value="-1">
                                     <Setter
                                         Property="Visibility"
@@ -101,7 +114,7 @@
                         </Style>
                     </TabControl.Style>
                 </TabControl>
-            </StackPanel>
+            </Grid>
         </Border>
     </Grid>
 </Window>

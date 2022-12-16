@@ -181,7 +181,7 @@ namespace Bakery.ViewModels
             currentWindow.Close();
         }
 
-        private bool CanRegister(object parameter) => AreAllFieldsFilledIn() == true;
+        private bool CanRegister() => AreAllFieldsFilledIn() == true;
         #endregion
 
         #endregion

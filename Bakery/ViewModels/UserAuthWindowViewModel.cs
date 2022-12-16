@@ -223,7 +223,7 @@ namespace Bakery.ViewModels
             mainWindow.Show();
         }
 
-        private bool CanAuthorize(object parameter)
+        private bool CanAuthorize()
             => _login != ""
                 && _password != ""
                 && _isTimerWorking == false;

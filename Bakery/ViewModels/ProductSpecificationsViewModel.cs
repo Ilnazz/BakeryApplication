@@ -4,8 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
@@ -16,52 +14,64 @@ namespace Bakery.ViewModels
         #region Constructor
         public ProductSpecificationsViewModel()
         {
-            DisplayTitle = "Ассортимент продуктов";
+            DisplayTitle = "Спецификации продуктов";
 
-            using (var dbContext = new DBEntities())
-            {
-                try
-                {
-                    _productSpecifications = dbContext.ProductSpecifications.ToList();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при работе с базой данных: {ex.Message}");
-                }
-            }
+            EditCommand = new RelayCommand(Edit);
+
+            _dbContext.ProductSpecifications.Load();
+            _productSpecifications = _dbContext.ProductSpecifications.Local;
         }
         #endregion
 
         #region Properties
+        private DBEntities _dbContext = new DBEntities();
+
         private IEnumerable<ProductSpecification> _productSpecifications;
         public IEnumerable<ProductSpecification> ProductSpecifications
         {
             get => _productSpecifications;
-            set => Set(ref _productSpecifications, ProductSpecifications);
+            set => Set(ref _productSpecifications, value);
         }
         #endregion
 
         #region Commands
 
+        #region Editing
+        public ICommand EditCommand { get; }
+
+        private void Edit(object parameter)
+        {
+            var prodSpec= parameter as ProductSpecification;
+
+            if (IsProductSpecificationAlreadyEditing(prodSpec))
+            {
+                MessageBox.Show("Продукт уже редактируется", "Сообщение", MessageBoxButton.OK);
+                return;
+            }
+
+            var prodSpecVM = new ProductSpecificationAddEditViewModel(prodSpec);
+
+            WorkspacesModel.Workspaces.Add(prodSpecVM);
+        }
+
+        private bool IsProductSpecificationAlreadyEditing(ProductSpecification prodSpec)
+            => WorkspacesModel.Workspaces.Any(viewModel =>
+                {
+                    if (viewModel is ProductSpecificationAddEditViewModel prodSpecVM == true
+                        && prodSpecVM.EditingProductSpecification.Id == prodSpec.Id)
+                        return true;
+                    return false;
+                });
+
+        #endregion
+
         #region Closing
         protected override void Close(object parameter)
         {
-
-        }
-
-        protected override bool CanClose(object parameter)
-        {
-            return true;
+            _dbContext.Dispose();
         }
         #endregion
 
-        #endregion
-
-        #region Help methods
-        private void LoadProductSpecifications()
-        {
-
-        }
         #endregion
     }
 }

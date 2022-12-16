@@ -23,16 +23,17 @@ namespace Bakery.ViewModels.Base
         #endregion
 
         #region Callbacks
-        private void OnClose(object parameter)
+        private void OnClose()
         {
             Closing?.Invoke(this, EventArgs.Empty);
 
-            Close(parameter);
+            Close();
         }
 
-        protected abstract void Close(object parameter);
+        protected virtual void Close() { }
+        protected virtual void Close(object parameter) { }
 
-        protected abstract bool CanClose(object parameter);
+        protected virtual bool CanClose(object parameter) => true;
         #endregion
     }
 }

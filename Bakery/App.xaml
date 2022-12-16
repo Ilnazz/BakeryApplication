@@ -14,6 +14,8 @@
                 <ResourceDictionary Source="Resources/Styles/LabelStyle.xaml"/>
                 <!-- Images -->
                 <ResourceDictionary Source="Resources/BitmapImages.xaml"/>
+                <!-- Converters -->
+                <ResourceDictionary Source="Resources/Converters.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
