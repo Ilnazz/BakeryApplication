@@ -9,7 +9,7 @@
         mc:Ignorable="d" Width="1075" Height="600"
         Title="Основная страница"
         WindowStartupLocation="CenterScreen">
-    
+
     <Window.Resources>
         <ResourceDictionary Source="../../Resources/Templates/MainWindowViewTemplates.xaml"/>
     </Window.Resources>
@@ -27,24 +27,24 @@
         <Border
             Grid.Row="0"
             Grid.Column="0"
-            BorderBrush="Gray"
-            Background="WhiteSmoke"
+            BorderBrush="{StaticResource TextColor}"
+            Background="{StaticResource BackgroundColor}"
             BorderThickness="1"
             CornerRadius="5"
             Margin="5,5,0,5">
             <StackPanel
                 Margin="5"
-                Background="WhiteSmoke">
+                Background="{StaticResource BackgroundColor}">
                 <Border
-                    BorderBrush="RoyalBlue"
-                    Background="RoyalBlue"
+                    BorderBrush="{StaticResource AccentColor}"
+                    Background="{StaticResource AccentColor}"
                     Padding="5"
                     CornerRadius="2.5">
                     <TextBlock
                         Text="Навигация"
-                        Background="RoyalBlue"
-                        Foreground="White"
-                        HorizontalAlignment="Center"/>
+                        Background="{StaticResource AccentColor}"
+                        HorizontalAlignment="Center"
+                        FontSize="18"/>
                 </Border>
 
                 <ItemsControl
@@ -58,17 +58,15 @@
             Grid.Row="0"
             Grid.Column="1"
             HorizontalAlignment="Center"
-            Width="3"
-            Background="Gainsboro"
-            BorderBrush="Black"
+            Width="5"
             BorderThickness="0.5"
-            Margin="10, 5"/>
+            Margin="10, 5" Background="{DynamicResource BackgroundColor}" BorderBrush="{DynamicResource TextColor}"/>
 
         <Border
             Grid.Row="0"
             Grid.Column="2"
-            BorderBrush="Gray"
-            Background="WhiteSmoke"
+            BorderBrush="{StaticResource TextColor}"
+            Background="{StaticResource BackgroundColor}"
             BorderThickness="1"
             CornerRadius="5"
             Margin="0,5,5,5">
@@ -78,19 +76,18 @@
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
                 <StackPanel
-                    Grid.Row="0"
                     Margin="5"
-                    Background="WhiteSmoke">
+                    Background="{StaticResource BackgroundColor}">
                     <Border
-                        BorderBrush="RoyalBlue"
-                        Background="RoyalBlue"
+                        BorderBrush="{StaticResource AccentColor}"
+                        Background="{StaticResource AccentColor}"
                         Padding="5"
                         CornerRadius="2.5">
                         <TextBlock
-                            Text="Рабочее пространство"
-                            Background="RoyalBlue"
-                            Foreground="White"
-                            HorizontalAlignment="Center"/>
+                            Text="Рабочее место"
+                            Background="{StaticResource AccentColor}"
+                            HorizontalAlignment="Center"
+                            FontSize="18"/>
                     </Border>
                 </StackPanel>
 
@@ -104,7 +101,7 @@
                         <Style TargetType="TabControl">
                             <Setter Property="Visibility" Value="Visible"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedIndex}"
+                                <DataTrigger Binding="{Binding SelectedWorkspaceIndex}"
                                              Value="-1">
                                     <Setter
                                         Property="Visibility"

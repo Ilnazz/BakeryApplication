@@ -1,6 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style TargetType="TextBox" BasedOn="{StaticResource CommonStyle}">
+    <Style TargetType="TextBox" BasedOn="{StaticResource FontStyle}">
         <Setter Property="Padding" Value="2.5"/>
     </Style>    
 </ResourceDictionary>

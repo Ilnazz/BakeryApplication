@@ -1,7 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="CommonStyle">
-        <Setter Property="Control.FontFamily" Value="Comic Sans MS"/>
-        <Setter Property="Control.FontSize" Value="14"/>
-    </Style>
+    <SolidColorBrush Color="#EDEBD7" x:Key="BackgroundColor"/>
+    <SolidColorBrush Color="#E3B23C" x:Key="AccentColor"/>
+    <SolidColorBrush Color="#423E37" x:Key="TextColor"/>
 </ResourceDictionary>

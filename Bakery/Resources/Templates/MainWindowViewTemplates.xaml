@@ -24,7 +24,8 @@
                 Command="{Binding Command}"
                 CommandParameter="{Binding DisplayTitle}"> 
                 <TextBlock
-                    Text="{Binding DisplayTitle}"/>
+                    Text="{Binding DisplayTitle}"
+                    FontSize="16"/>
             </Hyperlink>
         </TextBlock>
     </DataTemplate>
