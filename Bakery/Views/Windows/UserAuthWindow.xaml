@@ -11,7 +11,7 @@
              WindowStartupLocation="CenterScreen"
              Name="Window">
     <Window.DataContext>
-        <viewmodels:UserAuthWindowViewModel/>
+        <viewmodels:UserAuthWindowVM/>
     </Window.DataContext>
 
     <StackPanel

@@ -5,14 +5,14 @@
     
     <!-- Спецификации продуктов -->
     <DataTemplate
-        DataType="{x:Type viewmodels:ProductSpecificationsViewModel}">
-        <views:ProductSpecificationsView/>
+        DataType="{x:Type viewmodels:ProdSpecsVM}">
+        <views:ProdSpecsView/>
     </DataTemplate>
 
     <!-- Добавление/редактирование спецификации продукта -->
     <DataTemplate
-        DataType="{x:Type viewmodels:ProductSpecificationAddEditViewModel}">
-        <views:ProductSpecificationAddEditView/>
+        DataType="{x:Type viewmodels:ProdSpecsAddEditViewModel}">
+        <views:ProdSpecsAddEditView/>
     </DataTemplate>
 
     <!-- Шаблон команды-гиперссылки -->

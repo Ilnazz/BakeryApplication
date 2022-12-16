@@ -13,10 +13,10 @@ using System.Windows.Input;
 
 namespace Bakery.ViewModels
 {
-    public class ProductSpecificationAddEditViewModel : WorkspaceViewModel, INotifyDataErrorInfo
+    public class ProdSpecsAddEditViewModel : WorkspaceViewModel, INotifyDataErrorInfo
     {
         #region Constructor
-        public ProductSpecificationAddEditViewModel(ProductSpecification prodSpec = null)
+        public ProdSpecsAddEditViewModel(ProductSpecification prodSpec = null)
         {
             if (prodSpec == null)
                 DisplayTitle = "Добавление спецификации продукта";

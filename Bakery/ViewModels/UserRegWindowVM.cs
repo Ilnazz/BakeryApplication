@@ -8,10 +8,10 @@ using System;
 
 namespace Bakery.ViewModels
 {
-    public class UserRegWindowViewModel : ViewModelBase
+    public class UserRegWindowVM : ViewModelBase
     {
         #region Constructor
-        public UserRegWindowViewModel()
+        public UserRegWindowVM()
         {
             RegisterCommand = new RelayCommand(Register, CanRegister);
         }

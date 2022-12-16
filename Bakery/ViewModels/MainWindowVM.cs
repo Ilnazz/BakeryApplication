@@ -9,16 +9,16 @@ using System.Windows.Input;
 
 namespace Bakery.ViewModels
 {
-    public class MainWindowViewModel : WorkspaceViewModel
+    public class MainWindowVM : WorkspaceViewModel
     {
         #region Constructor
-        public MainWindowViewModel()
+        public MainWindowVM()
         {
             NavigateCommand = new RelayCommand(Navigate);
 
-            NavigationCommands = new List<CommandViewModel>()
+            NavigationCommands = new List<CommandVM>()
             {
-                new CommandViewModel("Спецификации продуктов", NavigateCommand),
+                new CommandVM("Спецификации продуктов", NavigateCommand),
             };
 
             Workspaces.CollectionChanged += (s, e) =>
@@ -42,7 +42,7 @@ namespace Bakery.ViewModels
         #region Commands
 
         #region Navigation
-        public IEnumerable<CommandViewModel> NavigationCommands { get; }
+        public IEnumerable<CommandVM> NavigationCommands { get; }
 
         public ICommand NavigateCommand { get; }
 
@@ -52,7 +52,7 @@ namespace Bakery.ViewModels
             switch (viewModelTitle)
             {
                 case "Спецификации продуктов":
-                    var prodSpecVM = new ProductSpecificationsViewModel();
+                    var prodSpecVM = new ProdSpecsVM();
                     Workspaces.Add(prodSpecVM);
                     break;
                 default:

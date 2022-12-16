@@ -17,7 +17,7 @@
     </Window.Resources>
 
     <Window.DataContext>
-        <viewmodels:UserRegWindowViewModel/>
+        <viewmodels:UserRegWindowVM/>
     </Window.DataContext>
 
     <ScrollViewer

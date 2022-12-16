@@ -10,10 +10,10 @@ using Bakery.Views.Windows;
 
 namespace Bakery.ViewModels
 {
-    public class UserAuthWindowViewModel : ViewModelBase
+    public class UserAuthWindowVM : ViewModelBase
     {
         #region Constructor
-        public UserAuthWindowViewModel()
+        public UserAuthWindowVM()
         {
             AuthorizeCommand = new RelayCommand(Authorize, CanAuthorize);
             OpenRegistrationWindowCommand = new RelayCommand(OpenRegistrationWindow);

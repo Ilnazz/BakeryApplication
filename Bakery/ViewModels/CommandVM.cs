@@ -4,10 +4,10 @@ using System.Windows.Input;
 
 namespace Bakery.ViewModels
 {
-    public class CommandViewModel : ViewModelBase
+    public class CommandVM : ViewModelBase
     {
         #region Constructor
-        public CommandViewModel(string displayTitle, ICommand command)
+        public CommandVM(string displayTitle, ICommand command)
         {
             Command = command ?? throw new ArgumentNullException(nameof(command));
             DisplayTitle = displayTitle;

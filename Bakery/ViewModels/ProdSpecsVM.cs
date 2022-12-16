@@ -9,10 +9,10 @@ using System.Windows.Input;
 
 namespace Bakery.ViewModels
 {
-    public class ProductSpecificationsViewModel : WorkspaceViewModel
+    public class ProdSpecsVM : WorkspaceViewModel
     {
         #region Constructor
-        public ProductSpecificationsViewModel()
+        public ProdSpecsVM()
         {
             DisplayTitle = "Спецификации продуктов";
 
@@ -49,7 +49,7 @@ namespace Bakery.ViewModels
                 return;
             }
 
-            var prodSpecVM = new ProductSpecificationAddEditViewModel(prodSpec);
+            var prodSpecVM = new ProdSpecsAddEditViewModel(prodSpec);
 
             WorkspacesModel.Workspaces.Add(prodSpecVM);
         }
@@ -57,7 +57,7 @@ namespace Bakery.ViewModels
         private bool IsProductSpecificationAlreadyEditing(ProductSpecification prodSpec)
             => WorkspacesModel.Workspaces.Any(viewModel =>
                 {
-                    if (viewModel is ProductSpecificationAddEditViewModel prodSpecVM == true
+                    if (viewModel is ProdSpecsAddEditViewModel prodSpecVM == true
                         && prodSpecVM.EditingProductSpecification.Id == prodSpec.Id)
                         return true;
                     return false;
