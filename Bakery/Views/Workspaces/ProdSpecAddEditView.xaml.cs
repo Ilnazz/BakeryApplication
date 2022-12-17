@@ -2,9 +2,9 @@
 
 namespace Bakery.Views.Workspaces
 {
-    public partial class ProdSpecsAddEditView : UserControl
+    public partial class ProdSpecAddEditView : UserControl
     {
-        public ProdSpecsAddEditView()
+        public ProdSpecAddEditView()
         {
             InitializeComponent();
         }

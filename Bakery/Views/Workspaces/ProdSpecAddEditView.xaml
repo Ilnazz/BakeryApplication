@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Bakery.Views.Workspaces.ProdSpecsAddEditView"
+﻿<UserControl x:Class="Bakery.Views.Workspaces.ProdSpecAddEditView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -27,12 +27,8 @@
                     Padding="5"
                     Margin="0,0,0,5">
                     <TextBox
-                        TextWrapping="Wrap">
-                        <Binding
-                            Path="Title"
-                            UpdateSourceTrigger="PropertyChanged">
-                        </Binding>
-                    </TextBox>
+                        Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}"
+                        TextWrapping="Wrap"/>
                 </GroupBox>
 
                 <GroupBox
@@ -58,7 +54,7 @@
                     <GroupBox
                         Header="Цена, руб."
                         Padding="5"
-                        Margin="0,0,0,5"
+                        Margin="0,0,5,0"
                         Grid.Column="0">
                         <TextBox>
                             <Binding
@@ -71,7 +67,6 @@
                     <GroupBox
                         Header="Вес"
                         Padding="5"
-                        Margin="0,0,0,5"
                         Grid.Column="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -98,7 +93,61 @@
                         </Grid>
                     </GroupBox>
                 </Grid>
-                
+
+                <GroupBox
+                    Header="Ингридиенты"
+                    Padding="5">
+                    <StackPanel>
+                        <Button
+                            Command="{Binding AddIngredientCommand}"
+                            Content="Добавить"
+                            HorizontalAlignment="Left"
+                            Margin="0,0,0,5"/>
+                        <ItemsControl
+                            ItemsSource="{Binding Ingredients}"
+                            d:ItemsSource="{d:SampleData ItemCount=3}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid
+                                        Margin="0,0,0,5">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <ComboBox
+                                            ItemsSource="{Binding DataContext.AvailableMaterialSpecs,
+                                                                  RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            DisplayMemberPath="Title"
+                                            SelectedValuePath="Id"
+                                            Grid.Column="0"
+                                            Margin="0,0,5,0"/>
+
+                                        <StackPanel
+                                            Orientation="Horizontal"
+                                            Grid.Column="1">
+                                            <TextBox
+                                                Text="{Binding Quantity}"
+                                                Margin="0,0,5,0"/>
+                                            <TextBlock
+                                                Text="{Binding MaterialSpecification.MeasureUnit.Title}"
+                                                Margin="0,0,5,0"/>
+                                        </StackPanel>
+
+                                        <Button
+                                            Command="{Binding DataContext.RemoveIngredientCommand,
+                                                              RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}"
+                                            CommandParameter="{Binding}"
+                                            Content="Удалить"
+                                            Grid.Column="2"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </GroupBox>
+
             </StackPanel>
 
             <StackPanel

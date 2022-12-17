@@ -129,13 +129,13 @@
     <Compile Include="Models\Product.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductIngredient.cs">
+      <DependentUpon>DBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductionPlan.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductionPlan_Product.cs">
-      <DependentUpon>DBModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\ProductRecipe.cs">
       <DependentUpon>DBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductSpecification.cs">
@@ -166,13 +166,20 @@
     <Compile Include="ViewModels\Base\WorkspaceVM.cs" />
     <Compile Include="ViewModels\ErrorsVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
+    <Compile Include="ViewModels\MaterialSpecAddEditVM.cs" />
     <Compile Include="ViewModels\MaterialSpecsVM.cs" />
     <Compile Include="ViewModels\ProdSpecAddEditVM.cs" />
     <Compile Include="ViewModels\ProdSpecsVM.cs" />
     <Compile Include="ViewModels\UserAuthWindowVM.cs" />
     <Compile Include="ViewModels\UserRegWindowVM.cs" />
-    <Compile Include="Views\Workspaces\ProdSpecsAddEditView.xaml.cs">
-      <DependentUpon>ProdSpecsAddEditView.xaml</DependentUpon>
+    <Compile Include="Views\Workspaces\MaterialSpecAddEditView.xaml.cs">
+      <DependentUpon>MaterialSpecAddEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Workspaces\MaterialSpecsView.xaml.cs">
+      <DependentUpon>MaterialSpecsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Workspaces\ProdSpecAddEditView.xaml.cs">
+      <DependentUpon>ProdSpecAddEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Workspaces\ProdSpecsView.xaml.cs">
       <DependentUpon>ProdSpecsView.xaml</DependentUpon>
@@ -230,7 +237,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Workspaces\ProdSpecsAddEditView.xaml">
+    <Page Include="Views\Workspaces\MaterialSpecAddEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Workspaces\MaterialSpecsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Workspaces\ProdSpecAddEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

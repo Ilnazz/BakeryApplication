@@ -21,6 +21,8 @@ namespace Bakery.ViewModels
 
             _dbContext.ProductSpecifications.Load();
             ProdSpecs = _dbContext.ProductSpecifications.Local;
+
+            RefreshCommand = new RelayCommand(Refresh);
         }
         #endregion
 
@@ -46,7 +48,7 @@ namespace Bakery.ViewModels
 
             if (IsProductSpecificationAlreadyEditing(prodSpec))
             {
-                MessageBox.Show("Продукт уже редактируется", "Сообщение", MessageBoxButton.OK);
+                MessageBox.Show("Уже редактируется", "Сообщение", MessageBoxButton.OK);
                 return;
             }
 
@@ -70,14 +72,21 @@ namespace Bakery.ViewModels
 
         private void Add(object param)
         {
-            var prodSpecVM = new ProdSpecAddEditVM();
+            var prodSpecAddEditVM = new ProdSpecAddEditVM();
 
-            prodSpecVM.Closing += () =>
-            {
-                // refresh prodSpecs
-            };
+            WorkspacesModel.Workspaces.Add(prodSpecAddEditVM);
+        }
+        #endregion
 
-            WorkspacesModel.Workspaces.Add(prodSpecVM);
+        #region Refreshing
+        public ICommand RefreshCommand { get; }
+
+        private void Refresh(object param)
+        {
+            _dbContext.Dispose();
+            _dbContext = new DBEntities();
+            _dbContext.ProductSpecifications.Load();
+            ProdSpecs = _dbContext.ProductSpecifications.Local;
         }
         #endregion
 

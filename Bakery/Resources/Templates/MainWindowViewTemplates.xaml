@@ -12,7 +12,19 @@
     <!-- Добавление/редактирование спецификации продукта -->
     <DataTemplate
         DataType="{x:Type viewmodels:ProdSpecAddEditVM}">
-        <views:ProdSpecsAddEditView/>
+        <views:ProdSpecAddEditView/>
+    </DataTemplate>
+
+    <!-- Спецификации материалов -->
+    <DataTemplate
+        DataType="{x:Type viewmodels:MaterialSpecsVM}">
+        <views:MaterialSpecsView/>
+    </DataTemplate>
+
+    <!-- Добавление/редактирование спецификации материала -->
+    <DataTemplate
+        DataType="{x:Type viewmodels:MaterialSpecAddEditVM}">
+        <views:MaterialSpecAddEditView/>
     </DataTemplate>
 
     <!-- Шаблон команды-гиперссылки -->

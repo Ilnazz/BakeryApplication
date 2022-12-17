@@ -34,9 +34,9 @@ namespace Bakery.Models
         public virtual DbSet<MeasureUnit> MeasureUnits { get; set; }
         public virtual DbSet<PlanState> PlanStates { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<ProductIngredient> ProductIngredients { get; set; }
         public virtual DbSet<ProductionPlan> ProductionPlans { get; set; }
         public virtual DbSet<ProductionPlan_Product> ProductionPlan_Product { get; set; }
-        public virtual DbSet<ProductRecipe> ProductRecipes { get; set; }
         public virtual DbSet<ProductSpecification> ProductSpecifications { get; set; }
         public virtual DbSet<Realization> Realizations { get; set; }
         public virtual DbSet<Realization_Product> Realization_Product { get; set; }

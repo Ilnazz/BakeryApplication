@@ -18,8 +18,8 @@ namespace Bakery.Models
         public ProductSpecification()
         {
             this.Products = new HashSet<Product>();
+            this.ProductIngredients = new HashSet<ProductIngredient>();
             this.ProductionPlan_Product = new HashSet<ProductionPlan_Product>();
-            this.ProductRecipes = new HashSet<ProductRecipe>();
         }
     
         public int Id { get; set; }
@@ -34,8 +34,8 @@ namespace Bakery.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductionPlan_Product> ProductionPlan_Product { get; set; }
+        public virtual ICollection<ProductIngredient> ProductIngredients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductRecipe> ProductRecipes { get; set; }
+        public virtual ICollection<ProductionPlan_Product> ProductionPlan_Product { get; set; }
     }
 }

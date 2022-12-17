@@ -90,6 +90,15 @@
           <Property Name="ProductSpecificationId" Type="int" Nullable="false" />
           <Property Name="ProductionPlanId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProductIngredient">
+          <Key>
+            <PropertyRef Name="ProductSpecificationId" />
+            <PropertyRef Name="MaterialSpecificationId" />
+          </Key>
+          <Property Name="ProductSpecificationId" Type="int" Nullable="false" />
+          <Property Name="MaterialSpecificationId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="ProductionPlan">
           <Key>
             <PropertyRef Name="Id" />
@@ -114,15 +123,6 @@
           </Key>
           <Property Name="ProductionPlanId" Type="int" Nullable="false" />
           <Property Name="EmployeeId" Type="int" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ProductRecipe">
-          <Key>
-            <PropertyRef Name="ProductSpecificationId" />
-            <PropertyRef Name="MaterialSpecificationId" />
-          </Key>
-          <Property Name="ProductSpecificationId" Type="int" Nullable="false" />
-          <Property Name="MaterialSpecificationId" Type="int" Nullable="false" />
-          <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductSpecification">
           <Key>
@@ -402,24 +402,24 @@
         </Association>
         <Association Name="FK_ProductRecipe_MaterialSpecification">
           <End Role="MaterialSpecification" Type="Self.MaterialSpecification" Multiplicity="1" />
-          <End Role="ProductRecipe" Type="Self.ProductRecipe" Multiplicity="*" />
+          <End Role="ProductIngredient" Type="Self.ProductIngredient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MaterialSpecification">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductRecipe">
+            <Dependent Role="ProductIngredient">
               <PropertyRef Name="MaterialSpecificationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductRecipe_ProductSpecification">
           <End Role="ProductSpecification" Type="Self.ProductSpecification" Multiplicity="1" />
-          <End Role="ProductRecipe" Type="Self.ProductRecipe" Multiplicity="*" />
+          <End Role="ProductIngredient" Type="Self.ProductIngredient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductSpecification">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductRecipe">
+            <Dependent Role="ProductIngredient">
               <PropertyRef Name="ProductSpecificationId" />
             </Dependent>
           </ReferentialConstraint>
@@ -507,10 +507,10 @@
           <EntitySet Name="MeasureUnit" EntityType="Self.MeasureUnit" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PlanState" EntityType="Self.PlanState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductIngredient" EntityType="Self.ProductIngredient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductionPlan" EntityType="Self.ProductionPlan" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductionPlan_Product" EntityType="Self.ProductionPlan_Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductionPlan_ResponsibleEmployees" EntityType="Self.ProductionPlan_ResponsibleEmployees" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductRecipe" EntityType="Self.ProductRecipe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductSpecification" EntityType="Self.ProductSpecification" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Realization" EntityType="Self.Realization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Realization_Product" EntityType="Self.Realization_Product" Schema="dbo" store:Type="Tables" />
@@ -592,11 +592,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_ProductRecipe_MaterialSpecification" Association="Self.FK_ProductRecipe_MaterialSpecification">
             <End Role="MaterialSpecification" EntitySet="MaterialSpecification" />
-            <End Role="ProductRecipe" EntitySet="ProductRecipe" />
+            <End Role="ProductIngredient" EntitySet="ProductIngredient" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductRecipe_ProductSpecification" Association="Self.FK_ProductRecipe_ProductSpecification">
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="ProductRecipe" EntitySet="ProductRecipe" />
+            <End Role="ProductIngredient" EntitySet="ProductIngredient" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductSpecification_MeasureUnit" Association="Self.FK_ProductSpecification_MeasureUnit">
             <End Role="MeasureUnit" EntitySet="MeasureUnit" />
@@ -637,9 +637,9 @@
           <EntitySet Name="MeasureUnits" EntityType="DBModel.MeasureUnit" />
           <EntitySet Name="PlanStates" EntityType="DBModel.PlanState" />
           <EntitySet Name="Products" EntityType="DBModel.Product" />
+          <EntitySet Name="ProductIngredients" EntityType="DBModel.ProductIngredient" />
           <EntitySet Name="ProductionPlans" EntityType="DBModel.ProductionPlan" />
           <EntitySet Name="ProductionPlan_Product" EntityType="DBModel.ProductionPlan_Product" />
-          <EntitySet Name="ProductRecipes" EntityType="DBModel.ProductRecipe" />
           <EntitySet Name="ProductSpecifications" EntityType="DBModel.ProductSpecification" />
           <EntitySet Name="Realizations" EntityType="DBModel.Realization" />
           <EntitySet Name="Realization_Product" EntityType="DBModel.Realization_Product" />
@@ -681,7 +681,7 @@
           </AssociationSet>
           <AssociationSet Name="FK_ProductRecipe_MaterialSpecification" Association="DBModel.FK_ProductRecipe_MaterialSpecification">
             <End Role="MaterialSpecification" EntitySet="MaterialSpecifications" />
-            <End Role="ProductRecipe" EntitySet="ProductRecipes" />
+            <End Role="ProductIngredient" EntitySet="ProductIngredients" />
           </AssociationSet>
           <AssociationSet Name="FK_MaterialsPurchasePlan_PlanState" Association="DBModel.FK_MaterialsPurchasePlan_PlanState">
             <End Role="PlanState" EntitySet="PlanStates" />
@@ -715,6 +715,10 @@
             <End Role="Product" EntitySet="Products" />
             <End Role="Realization_Product" EntitySet="Realization_Product" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductRecipe_ProductSpecification" Association="DBModel.FK_ProductRecipe_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecifications" />
+            <End Role="ProductIngredient" EntitySet="ProductIngredients" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProductionPlan_Product_ProductionPlan" Association="DBModel.FK_ProductionPlan_Product_ProductionPlan">
             <End Role="ProductionPlan" EntitySet="ProductionPlans" />
             <End Role="ProductionPlan_Product" EntitySet="ProductionPlan_Product" />
@@ -722,10 +726,6 @@
           <AssociationSet Name="FK_ProductionPlan_Product_ProductSpecification" Association="DBModel.FK_ProductionPlan_Product_ProductSpecification">
             <End Role="ProductSpecification" EntitySet="ProductSpecifications" />
             <End Role="ProductionPlan_Product" EntitySet="ProductionPlan_Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductRecipe_ProductSpecification" Association="DBModel.FK_ProductRecipe_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecifications" />
-            <End Role="ProductRecipe" EntitySet="ProductRecipes" />
           </AssociationSet>
           <AssociationSet Name="FK_Realization_Product_Realization" Association="DBModel.FK_Realization_Product_Realization">
             <End Role="Realization" EntitySet="Realizations" />
@@ -790,7 +790,7 @@
           <NavigationProperty Name="Materials" Relationship="DBModel.FK_Material_MaterialSpecification" FromRole="MaterialSpecification" ToRole="Material" />
           <NavigationProperty Name="MeasureUnit" Relationship="DBModel.FK_MaterialSpecification_MeasureUnit" FromRole="MaterialSpecification" ToRole="MeasureUnit" />
           <NavigationProperty Name="MaterialsPurchasePlan_SupplierAndMaterialSpecification" Relationship="DBModel.FK_MaterialsPurchasePlan_SupplierAndMaterialSpecification_MaterialSpecification" FromRole="MaterialSpecification" ToRole="MaterialsPurchasePlan_SupplierAndMaterialSpecification" />
-          <NavigationProperty Name="ProductRecipes" Relationship="DBModel.FK_ProductRecipe_MaterialSpecification" FromRole="MaterialSpecification" ToRole="ProductRecipe" />
+          <NavigationProperty Name="ProductIngredients" Relationship="DBModel.FK_ProductRecipe_MaterialSpecification" FromRole="MaterialSpecification" ToRole="ProductIngredient" />
         </EntityType>
         <EntityType Name="MaterialsPurchasePlan">
           <Key>
@@ -848,6 +848,17 @@
           <NavigationProperty Name="ProductSpecification" Relationship="DBModel.FK_Product_ProductSpecification" FromRole="Product" ToRole="ProductSpecification" />
           <NavigationProperty Name="Realization_Product" Relationship="DBModel.FK_Realization_Product_Product" FromRole="Product" ToRole="Realization_Product" />
         </EntityType>
+        <EntityType Name="ProductIngredient">
+          <Key>
+            <PropertyRef Name="ProductSpecificationId" />
+            <PropertyRef Name="MaterialSpecificationId" />
+          </Key>
+          <Property Name="ProductSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="MaterialSpecificationId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MaterialSpecification" Relationship="DBModel.FK_ProductRecipe_MaterialSpecification" FromRole="ProductIngredient" ToRole="MaterialSpecification" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DBModel.FK_ProductRecipe_ProductSpecification" FromRole="ProductIngredient" ToRole="ProductSpecification" />
+        </EntityType>
         <EntityType Name="ProductionPlan">
           <Key>
             <PropertyRef Name="Id" />
@@ -871,17 +882,6 @@
           <NavigationProperty Name="ProductionPlan" Relationship="DBModel.FK_ProductionPlan_Product_ProductionPlan" FromRole="ProductionPlan_Product" ToRole="ProductionPlan" />
           <NavigationProperty Name="ProductSpecification" Relationship="DBModel.FK_ProductionPlan_Product_ProductSpecification" FromRole="ProductionPlan_Product" ToRole="ProductSpecification" />
         </EntityType>
-        <EntityType Name="ProductRecipe">
-          <Key>
-            <PropertyRef Name="ProductSpecificationId" />
-            <PropertyRef Name="MaterialSpecificationId" />
-          </Key>
-          <Property Name="ProductSpecificationId" Type="Int32" Nullable="false" />
-          <Property Name="MaterialSpecificationId" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="MaterialSpecification" Relationship="DBModel.FK_ProductRecipe_MaterialSpecification" FromRole="ProductRecipe" ToRole="MaterialSpecification" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DBModel.FK_ProductRecipe_ProductSpecification" FromRole="ProductRecipe" ToRole="ProductSpecification" />
-        </EntityType>
         <EntityType Name="ProductSpecification">
           <Key>
             <PropertyRef Name="Id" />
@@ -895,8 +895,8 @@
           <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="MeasureUnit" Relationship="DBModel.FK_ProductSpecification_MeasureUnit" FromRole="ProductSpecification" ToRole="MeasureUnit" />
           <NavigationProperty Name="Products" Relationship="DBModel.FK_Product_ProductSpecification" FromRole="ProductSpecification" ToRole="Product" />
+          <NavigationProperty Name="ProductIngredients" Relationship="DBModel.FK_ProductRecipe_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductIngredient" />
           <NavigationProperty Name="ProductionPlan_Product" Relationship="DBModel.FK_ProductionPlan_Product_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductionPlan_Product" />
-          <NavigationProperty Name="ProductRecipes" Relationship="DBModel.FK_ProductRecipe_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductRecipe" />
         </EntityType>
         <EntityType Name="Realization">
           <Key>
@@ -1053,12 +1053,12 @@
         </Association>
         <Association Name="FK_ProductRecipe_MaterialSpecification">
           <End Type="DBModel.MaterialSpecification" Role="MaterialSpecification" Multiplicity="1" />
-          <End Type="DBModel.ProductRecipe" Role="ProductRecipe" Multiplicity="*" />
+          <End Type="DBModel.ProductIngredient" Role="ProductIngredient" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MaterialSpecification">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="ProductRecipe">
+            <Dependent Role="ProductIngredient">
               <PropertyRef Name="MaterialSpecificationId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1159,6 +1159,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductRecipe_ProductSpecification">
+          <End Type="DBModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DBModel.ProductIngredient" Role="ProductIngredient" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductIngredient">
+              <PropertyRef Name="ProductSpecificationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductionPlan_Product_ProductionPlan">
           <End Type="DBModel.ProductionPlan" Role="ProductionPlan" Multiplicity="1" />
           <End Type="DBModel.ProductionPlan_Product" Role="ProductionPlan_Product" Multiplicity="*" />
@@ -1179,18 +1191,6 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="ProductionPlan_Product">
-              <PropertyRef Name="ProductSpecificationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductRecipe_ProductSpecification">
-          <End Type="DBModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
-          <End Type="DBModel.ProductRecipe" Role="ProductRecipe" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductRecipe">
               <PropertyRef Name="ProductSpecificationId" />
             </Dependent>
           </ReferentialConstraint>
@@ -1227,7 +1227,7 @@
           <End Type="DBModel.Employee" Role="Employee" Multiplicity="*" />
           <End Type="DBModel.ProductionPlan" Role="ProductionPlan" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1317,6 +1317,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductIngredients">
+            <EntityTypeMapping TypeName="DBModel.ProductIngredient">
+              <MappingFragment StoreEntitySet="ProductIngredient">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="MaterialSpecificationId" ColumnName="MaterialSpecificationId" />
+                <ScalarProperty Name="ProductSpecificationId" ColumnName="ProductSpecificationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ProductionPlans">
             <EntityTypeMapping TypeName="DBModel.ProductionPlan">
               <MappingFragment StoreEntitySet="ProductionPlan">
@@ -1332,15 +1341,6 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductSpecificationId" ColumnName="ProductSpecificationId" />
                 <ScalarProperty Name="ProductionPlanid" ColumnName="ProductionPlanid" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductRecipes">
-            <EntityTypeMapping TypeName="DBModel.ProductRecipe">
-              <MappingFragment StoreEntitySet="ProductRecipe">
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="MaterialSpecificationId" ColumnName="MaterialSpecificationId" />
-                <ScalarProperty Name="ProductSpecificationId" ColumnName="ProductSpecificationId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

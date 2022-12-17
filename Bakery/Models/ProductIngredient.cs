@@ -12,7 +12,7 @@ namespace Bakery.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class ProductRecipe
+    public partial class ProductIngredient
     {
         public int ProductSpecificationId { get; set; }
         public int MaterialSpecificationId { get; set; }

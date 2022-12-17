@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
@@ -27,20 +28,30 @@ namespace Bakery.ViewModels
             else
                 DisplayTitle = "Редактирование спецификации продукта";
 
-            if (prodSpecId != 0)
-                _editingProdSpec = _dbContext.ProductSpecifications
-                                            .First(ps => ps.Id == prodSpecId);
-            else
+            if (prodSpecId == 0)
                 _editingProdSpec = new ProductSpecification();
+            else
+                _editingProdSpec = _dbContext.ProductSpecifications.First(ps => ps.Id == prodSpecId);
 
             Photo = _editingProdSpec.Photo;
-                
+
+            _dbContext.ProductIngredients.Load();
+            Ingredients = new ObservableCollection<ProductIngredient>(_editingProdSpec.ProductIngredients);
+
+            _dbContext.MaterialSpecifications.Load();
+            var availableMaterialSpecs = _dbContext.MaterialSpecifications.Local
+                .Where(ms => Ingredients.All(i => i.MaterialSpecificationId != ms.Id));
+
+            AvailableMaterialSpecs = new ObservableCollection<MaterialSpecification>(availableMaterialSpecs);
+
             _dbContext.MeasureUnits.Load();
             AvailableMeasureUnits = _dbContext.MeasureUnits.Local;
 
             SaveCommand = new RelayCommand(Save, CanSave);
             ChoosePhotoCommand = new RelayCommand(ChoosePhoto);
             RemovePhotoCommand = new RelayCommand(RemovePhoto);
+            AddIngredientCommand = new RelayCommand(AddIngredient, CanAddIngredient);
+            RemoveIngredientCommand = new RelayCommand(RemoveIngredient);
         }
         #endregion
 
@@ -113,6 +124,10 @@ namespace Bakery.ViewModels
             get => _editingProdSpec.MeasureUnit;
             set => _editingProdSpec.MeasureUnit = value;
         }
+
+        public ObservableCollection<ProductIngredient> Ingredients { get; }
+
+        public ObservableCollection<MaterialSpecification> AvailableMaterialSpecs { get; }
         #endregion
 
         #region Validation
@@ -136,6 +151,19 @@ namespace Bakery.ViewModels
             if (string.IsNullOrEmpty(value) == true)
             {
                 _errorsVM.AddError("Title", "Название не может быть пустым");
+                isValid = false;
+            }
+
+            var isAlreadyExists = _dbContext.ProductSpecifications.Count(ps => ps.Title == value) > 1;
+            if (isAlreadyExists)
+            {
+                _errorsVM.AddError("Title", "Такая спецификация продукта уже существует");
+                isValid = false;
+            }
+
+            if (value.Length > 100)
+            {
+                _errorsVM.AddError("Title", "Название должно содержать не более 100 символов");
                 isValid = false;
             }
 
@@ -237,13 +265,40 @@ namespace Bakery.ViewModels
         private void RemovePhoto(object param) => Photo = null;
         #endregion
 
+        #region Ingredients adding / removing
+        public ICommand AddIngredientCommand { get; }
+
+        private void AddIngredient(object param)
+        {
+            var ingredient = new ProductIngredient();
+            ingredient.ProductSpecificationId = EditingProdSpec.Id;
+            Ingredients.Add(ingredient);
+        }
+
+        private bool CanAddIngredient(object param)
+        {
+            return true;
+        }
+
+        public ICommand RemoveIngredientCommand { get; }
+
+        private void RemoveIngredient(object param)
+        {
+            var ingredient = param as ProductIngredient;
+            Ingredients.Remove(ingredient);
+        }
+
+        #endregion
+
         #region Saving
         public ICommand SaveCommand { get; }
 
         private void Save(object param)
         {
-            var isNewProdSpec = _editingProdSpec.Id == 0;
-            if (isNewProdSpec)
+            _editingProdSpec.Title = _editingProdSpec.Title.Trim();
+            _editingProdSpec.Description = _editingProdSpec.Description.Trim();
+
+            if (IsNewProdSpec)
             {
                 _dbContext.ProductSpecifications.Add(_editingProdSpec);
                 MessageBox.Show("Новая спецификация продукта добавлена");
@@ -255,8 +310,8 @@ namespace Bakery.ViewModels
 
         private bool CanSave(object param)
         {
-            if (_dbContext.ChangeTracker.HasChanges() == false)
-                return false;
+            //if (_dbContext.ChangeTracker.HasChanges() == false)
+                //return false;
             if (_editingProdSpec.MeasureUnit == null)
                 return false;
             return HasErrors == false;
@@ -276,7 +331,7 @@ namespace Bakery.ViewModels
 
             if (result == MessageBoxResult.Yes)
             {
-                _dbContext.SaveChanges();
+                Save(null);
                 return true;
             }
             else if (result == MessageBoxResult.No)

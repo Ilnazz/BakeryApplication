@@ -17,6 +17,7 @@ namespace Bakery.ViewModels.Base
         #endregion
 
         #region Properties
+
         public event Action Closing;
 
         public ICommand CloseCommand { get; }
