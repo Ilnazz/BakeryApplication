@@ -1,20 +1,23 @@
 ﻿using Bakery.Models;
 using Bakery.ViewModels.Base;
+using Bakery.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace Bakery.ViewModels
 {
-    public class MainWindowVM : WorkspaceViewModel
+    public class MainWindowVM : WorkspaceVM
     {
         #region Constructor
-        public MainWindowVM()
+        public MainWindowVM(int userId)
         {
             NavigateCommand = new RelayCommand(Navigate);
+            UserLogOutCommand = new RelayCommand(UserLogOut);
 
             NavigationCommands = new List<CommandVM>()
             {
@@ -23,20 +26,25 @@ namespace Bakery.ViewModels
 
             Workspaces.CollectionChanged += (s, e) =>
             {
-                SelectedWorkspaceIndex = Workspaces.Count != 0 ? Workspaces.Count - 1 : -1;
+                IsThereWorkspace = Workspaces.Count != 0;
             };
+
+            CurrentUser = _dbContext.Users.First(u => u.Id == userId);
         }
         #endregion
 
-        #region Workspaces
-        public ObservableCollection<WorkspaceViewModel> Workspaces { get => WorkspacesModel.Workspaces; }
+        #region Properties
+        public ObservableCollection<WorkspaceVM> Workspaces { get => WorkspacesModel.Workspaces; }
 
-        private int _selectedWorkspaceIndex;
-        public int SelectedWorkspaceIndex
-        {
-            get => _selectedWorkspaceIndex;
-            set => Set(ref _selectedWorkspaceIndex, value);
+        private bool _isThereWorkspace = false;
+        public bool IsThereWorkspace {
+            get => _isThereWorkspace;
+            set => Set(ref _isThereWorkspace, value);
         }
+
+        private DBEntities _dbContext = new DBEntities();
+
+        public User CurrentUser { get; }
         #endregion
 
         #region Commands
@@ -46,34 +54,67 @@ namespace Bakery.ViewModels
 
         public ICommand NavigateCommand { get; }
 
-        private void Navigate(object parameter)
+        private void Navigate(object param)
         {
-            var viewModelTitle = parameter as string;
-            switch (viewModelTitle)
+            var vmTitle = param as string;
+
+            if (IsViewAlreadyOpened(vmTitle))
+                return;
+
+            WorkspaceVM workspaceVM;
+            switch (vmTitle)
             {
                 case "Спецификации продуктов":
-                    var prodSpecVM = new ProdSpecsVM();
-                    Workspaces.Add(prodSpecVM);
+                    workspaceVM = new ProdSpecsVM();
                     break;
                 default:
                     throw new ArgumentException();
             }
+
+            Workspaces.Add(workspaceVM);
+        }
+
+        private bool IsViewAlreadyOpened(string vmTitle)
+            => Workspaces.Any(ws => ws.DisplayTitle == vmTitle);
+        #endregion
+
+        #region User logging out
+        public ICommand UserLogOutCommand { get; }
+
+        private bool _isUserLoggingOut = false;
+        private void UserLogOut(object param)
+        {
+            var result = MessageBox.Show("Выйти из системы?",
+                "Подтверждение",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+            if (result == MessageBoxResult.No)
+                return;
+
+            var userAuthWindow = new UserAuthWindow();
+            userAuthWindow.Show();
+
+            _isUserLoggingOut = true;
+            base.CloseCommand.Execute(null);
         }
         #endregion
 
         #region Closing
-        protected override void Close(object parameter)
+        protected override bool Close()
         {
+            if (_isUserLoggingOut)
+                return true;
 
-        }
-
-        protected override bool CanClose(object parameter)
-        {
-            var close = MessageBox.Show("Закрыть приложение?", "Подтверждение", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (close == MessageBoxResult.Yes)
+            var result = MessageBox.Show("Закрыть приложение?",
+                "Подтверждение",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
                 return true;
             return false;
         }
+
+        public bool OnClose() => Close();
         #endregion
 
         #endregion

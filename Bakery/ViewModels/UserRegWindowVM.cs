@@ -111,7 +111,7 @@ namespace Bakery.ViewModels
         #region Registration
         public ICommand RegisterCommand { get; }
 
-        private void Register(object parameter)
+        private void Register(object param)
         {
             //TODO: разбить на методы
             NormalizeFileds();
@@ -124,17 +124,7 @@ namespace Bakery.ViewModels
 
             bool isUserExist;
             using (var dbContext = new DBEntities())
-            {
-                try
-                {
-                    isUserExist = dbContext.Users.Any(u => u.Login == _login && u.Password == _password);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при работе с базой данных: {ex.Message}");
-                    return;
-                }
-            }
+                isUserExist = dbContext.Users.Any(u => u.Login == _login && u.Password == _password);
 
             if (isUserExist)
             {
@@ -162,26 +152,18 @@ namespace Bakery.ViewModels
 
             using (var dbContext = new DBEntities())
             {
-                try
-                {
-                    dbContext.Employees.Add(newEmployee);
-                    dbContext.Users.Add(newUser);
-                    dbContext.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка: {ex.Message}");
-                    return;
-                }
+                dbContext.Employees.Add(newEmployee);
+                dbContext.Users.Add(newUser);
+                dbContext.SaveChanges();
             }
 
             MessageBox.Show("Пользователь зарегистрирован");
 
-            var currentWindow = parameter as Window;
+            var currentWindow = param as Window;
             currentWindow.Close();
         }
 
-        private bool CanRegister() => AreAllFieldsFilledIn() == true;
+        private bool CanRegister(object param) => AreAllFieldsFilledIn() == true;
         #endregion
 
         #endregion

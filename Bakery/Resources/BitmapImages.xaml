@@ -3,4 +3,12 @@
     <BitmapImage
         UriSource="/Resources/Images/no_photo.png"
         x:Key="NoPhoto"/>
+
+    <BitmapImage
+        UriSource="/Resources/Images/logotype.png"
+        x:Key="Logotype"/>
+
+    <BitmapImage
+        UriSource="/Resources/Images/user_avatar.png"
+        x:Key="UserAvatar"/>
 </ResourceDictionary>

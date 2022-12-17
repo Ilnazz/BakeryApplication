@@ -6,43 +6,9 @@
              xmlns:local="clr-namespace:Bakery.Views.Workspaces"
              mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <ControlTemplate
-            x:Key="ValidationErrorTemplate">
-            <StackPanel>
-                <Border BorderBrush="Red"
-                        BorderThickness="1">
-
-                    <AdornedElementPlaceholder
-                        x:Name="AdornedElement"/>
-                </Border>
-
-                <Border Background="Red"
-                        BorderBrush="Red"
-                        Padding="4"
-                        BorderThickness="1,0,1,1"
-                        HorizontalAlignment="Left">
-                    <ItemsControl ItemsSource="{Binding}"
-                                  HorizontalAlignment="Left">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <TextBlock
-                                    Text="{Binding ErrorContent}"
-                                    TextWrapping="Wrap"
-                                    Foreground="White"/>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Border>
-            </StackPanel>
-        </ControlTemplate>
-    </UserControl.Resources>
-
     <ScrollViewer>
         <Grid
-            DataContext="{Binding EditingProductSpecification}"
             Margin="5">
-
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -61,13 +27,12 @@
                     Padding="5"
                     Margin="0,0,0,5">
                     <TextBox
-                        Text="{Binding DataContext.Title,
-                                       RelativeSource={RelativeSource FindAncestor,
-                                       AncestorType={x:Type UserControl}},
-                                       UpdateSourceTrigger=PropertyChanged,
-                                       ValidatesOnNotifyDataErrors=True}"
-                        Validation.ErrorTemplate="{DynamicResource ValidationErrorTemplate}"
-                        TextWrapping="Wrap"/>
+                        TextWrapping="Wrap">
+                        <Binding
+                            Path="Title"
+                            UpdateSourceTrigger="PropertyChanged">
+                        </Binding>
+                    </TextBox>
                 </GroupBox>
 
                 <GroupBox
@@ -75,62 +40,65 @@
                     Padding="5"
                     Margin="0,0,0,5">
                     <TextBox
-                        Text="{Binding Description}"
+                        Text="{Binding Description,
+                                       UpdateSourceTrigger=PropertyChanged}"
                         AcceptsReturn="True"
                         VerticalScrollBarVisibility="Auto"
                         MaxHeight="190"
-                        TextWrapping="Wrap"/>
-                </GroupBox>
-
-                <GroupBox
-                    Header="Цена, руб."
-                    Padding="5"
-                    Margin="0,0,0,5">
-                    <TextBox>
-                        <TextBox.Text>
-                            <Binding
-                                Path="Price"
-                                StringFormat="#"
-                                UpdateSourceTrigger="PropertyChanged">
-                            </Binding>
-                        </TextBox.Text>
+                        TextWrapping="Wrap">
                     </TextBox>
                 </GroupBox>
 
-                <GroupBox
-                    Header="Вес"
-                    Padding="5"
-                    Margin="0,0,0,5">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox
+                        Header="Цена, руб."
+                        Padding="5"
+                        Margin="0,0,0,5"
+                        Grid.Column="0">
+                        <TextBox>
+                            <Binding
+                                Path="Price"
+                                UpdateSourceTrigger="PropertyChanged">
+                            </Binding>
+                        </TextBox>
+                    </GroupBox>
+
+                    <GroupBox
+                        Header="Вес"
+                        Padding="5"
+                        Margin="0,0,0,5"
+                        Grid.Column="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                Text="{Binding Weight,
+                                               StringFormat=d,
+                                               UpdateSourceTrigger=PropertyChanged}"
+                                Grid.Column="0"/>
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Grid.Column="1">
+                                <Label
+                                    Target="{Binding ElementName=CBMeasureUnit}"
+                                    Content="Ед. измерения:"/>
+                                <ComboBox
+                                    ItemsSource="{Binding AvailableMeasureUnits}"
+                                    SelectedItem="{Binding MeasureUnit}"
+                                    DisplayMemberPath="Title"
+                                    x:Name="CBMeasureUnit"/>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                </Grid>
                 
-                    <DockPanel>
-                    
-                        <TextBox
-                            Text="{Binding Weight,
-                                           StringFormat=#}"
-                            DockPanel.Dock="Left"/>
-                        <StackPanel
-                            DockPanel.Dock="Right"
-                            HorizontalAlignment="Right"
-                            Orientation="Horizontal">
-                        
-                            <Label
-                                Target="{Binding ElementName=CBMeasureUnit}"
-                                Content="Единица измерения:"/>
-                            <ComboBox
-                                ItemsSource="{Binding DataContext.AvailableMeasureUnits,
-                                                      RelativeSource={RelativeSource FindAncestor,
-                                                      AncestorType={x:Type UserControl}}}"
-                                SelectedValue="{Binding MeasureUnit.Id}" 
-                                SelectedValuePath="Id" 
-                                DisplayMemberPath="Title"
-                                x:Name="CBMeasureUnit"
-                                HorizontalAlignment="Right"/>
-                        </StackPanel>
-                    
-                    </DockPanel>
-                
-                </GroupBox>
-            
             </StackPanel>
 
             <StackPanel
@@ -141,24 +109,23 @@
                     Header="Фотография"
                     Padding="5">
                     <StackPanel>
-                    
                         <Image
-                            Source="{Binding DataContext.EditingProductSpecificationPhoto,
-                                             TargetNullValue={StaticResource NoPhoto},
-                                             RelativeSource={RelativeSource FindAncestor,
-                                             AncestorType={x:Type UserControl}}}"
-                            MaxHeight="295"
-                            Margin="0,0,0,5"/>
+                            Source="{Binding Photo,
+                                             UpdateSourceTrigger=PropertyChanged,
+                                             TargetNullValue={StaticResource NoPhoto}}"
+                            MaxHeight="300"
+                            MaxWidth="450"
+                            Margin="0,0,0,10"/>
                         <Button
-                            Command="{Binding DataContext.ChoosePhotoCommand,
-                                              RelativeSource={RelativeSource FindAncestor,
-                                              AncestorType={x:Type UserControl}}}">
+                            Command="{Binding ChoosePhotoCommand}"
+                            Margin="0,0,0,10">
                             <Button.Style>
                                 <Style
-                                    TargetType="Button">
+                                    TargetType="Button"
+                                    BasedOn="{StaticResource ButtonStyle}">
                                     <Setter
                                         Property="Content"
-                                        Value="Редактировать фотографию"/>
+                                        Value="Заменить фотографию"/>
                                     <Style.Triggers>
                                         <DataTrigger
                                             Binding="{Binding Photo}"
@@ -171,32 +138,43 @@
                                 </Style>
                             </Button.Style>
                         </Button>
-                    
+                        <Button
+                            Command="{Binding RemovePhotoCommand}"
+                            Content="Удалить фотографию">
+                            <Button.Style>
+                                <Style
+                                    TargetType="Button"
+                                    BasedOn="{StaticResource ButtonStyle}">
+                                    <Setter Property="Visibility" Value="Visible"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Photo}" Value="{x:Null}">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
                     </StackPanel>
-                
                 </GroupBox>
-            
             </StackPanel>
 
             <Button
-                Command="{Binding DataContext.SaveCommand,
-                                  RelativeSource={RelativeSource FindAncestor,
-                                  AncestorType={x:Type UserControl}}}"
+                Command="{Binding SaveCommand}"
                 Margin="0,5,0,0"
                 Grid.Row="1"
                 Grid.Column="1"
                 HorizontalAlignment="Right">
-
                 <Button.Style>
                     <Style
-                        TargetType="Button">
+                        TargetType="Button"
+                        BasedOn="{StaticResource ButtonStyle}">
                         <Setter
                             Property="Content"
                             Value="Сохранить"/>
                         <Style.Triggers>
                             <DataTrigger
-                                Binding="{Binding Id}"
-                                Value="0">
+                                Binding="{Binding IsNewProdSpec}"
+                                Value="True">
                                 <Setter
                                     Property="Content"
                                     Value="Добавить"/>
@@ -205,8 +183,6 @@
                     </Style>
                 </Button.Style>
             </Button>
-
         </Grid>
     </ScrollViewer>
-
 </UserControl>

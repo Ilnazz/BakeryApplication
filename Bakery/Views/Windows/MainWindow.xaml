@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Bakery.Views.Workspaces"
         xmlns:views="clr-namespace:Bakery.Views.Workspaces"
         xmlns:viewmodels="clr-namespace:Bakery.ViewModels"
-        mc:Ignorable="d" Width="1075" Height="600"
+        mc:Ignorable="d" Width="1240" Height="600"
         Title="Основная страница"
         WindowStartupLocation="CenterScreen">
 
@@ -24,14 +24,65 @@
                 Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
         <Border
             Grid.Row="0"
+            Grid.ColumnSpan="3"
+            Padding="5"
+            Background="{StaticResource BackgroundColor}"
+            BorderBrush="{StaticResource TextColor}"
+            BorderThickness="1"
+            CornerRadius="5"
+            Margin="5,0,5,10">
+            <DockPanel>
+                <StackPanel
+                    Orientation="Horizontal"
+                    DockPanel.Dock="Left">
+                    <Image
+                        Source="{StaticResource Logotype}"
+                        Width="50"
+                        Margin="0,0,5,0"/>
+                    <TextBlock
+                        Text="Хлебопекарня Колосок"
+                        VerticalAlignment="Center"
+                        FontSize="18"
+                        Margin="0,0,5,0"/>
+                </StackPanel>
+                
+                <StackPanel
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal"
+                    HorizontalAlignment="Right">
+                    <Image
+                        Source="{Binding CurrentUser.Photo,
+                                         TargetNullValue={StaticResource UserAvatar}}"
+                        Width="35"
+                        Margin="0,0,5,0"/>
+                    <TextBlock
+                        Text="{Binding CurrentUser.Initials}"
+                        Margin="0,0,10,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"/>
+                    <Button
+                        Command="{Binding UserLogOutCommand}"
+                        Content="Выйти"
+                        VerticalAlignment="Center"/>
+                </StackPanel>
+            </DockPanel>
+        </Border>
+
+        <Border
+            Grid.Row="1"
             Grid.Column="0"
             BorderBrush="{StaticResource TextColor}"
             Background="{StaticResource BackgroundColor}"
             BorderThickness="1"
             CornerRadius="5"
-            Margin="5,5,0,5">
+            Margin="5,0,0,5">
             <StackPanel
                 Margin="5"
                 Background="{StaticResource BackgroundColor}">
@@ -55,21 +106,21 @@
         </Border>
 
         <GridSplitter
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="1"
             HorizontalAlignment="Center"
             Width="5"
             BorderThickness="0.5"
-            Margin="10, 5" Background="{DynamicResource BackgroundColor}" BorderBrush="{DynamicResource TextColor}"/>
+            Margin="10, 5, 10, 10" Background="{DynamicResource BackgroundColor}" BorderBrush="{DynamicResource TextColor}"/>
 
         <Border
-            Grid.Row="0"
+            Grid.Row="1"
             Grid.Column="2"
             BorderBrush="{StaticResource TextColor}"
             Background="{StaticResource BackgroundColor}"
             BorderThickness="1"
             CornerRadius="5"
-            Margin="0,5,5,5">
+            Margin="0,0,5,5">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -94,15 +145,14 @@
                 <TabControl
                     ItemsSource="{Binding Workspaces}"
                     ItemTemplate="{Binding Source={StaticResource ClosableTabItemTemplate}}"
-                    SelectedIndex="{Binding SelectedWorkspaceIndex}"
                     Margin="5,0,5,5"
                     Grid.Row="1">
                     <TabControl.Style>
                         <Style TargetType="TabControl">
                             <Setter Property="Visibility" Value="Visible"/>
                             <Style.Triggers>
-                                <DataTrigger Binding="{Binding SelectedWorkspaceIndex}"
-                                             Value="-1">
+                                <DataTrigger Binding="{Binding IsThereWorkspace}"
+                                         Value="False">
                                     <Setter
                                         Property="Visibility"
                                         Value="Collapsed"/>

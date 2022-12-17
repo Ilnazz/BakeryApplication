@@ -14,6 +14,21 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,6 +48,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -68,6 +86,7 @@
     <Compile Include="Converters\ComparisonConverter.cs" />
     <Compile Include="Converters\TextLengthConverter.cs" />
     <Compile Include="Models\DBEntitiesExtensions\ProductSpecification.Extension.cs" />
+    <Compile Include="Models\DBEntitiesExtensions\User.Extension.cs" />
     <Compile Include="Models\DBModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -144,17 +163,19 @@
     <Compile Include="ViewModels\CommandVM.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Base\ViewModelBase.cs" />
-    <Compile Include="ViewModels\Base\WorkspaceViewModel.cs" />
+    <Compile Include="ViewModels\Base\WorkspaceVM.cs" />
+    <Compile Include="ViewModels\ErrorsVM.cs" />
     <Compile Include="ViewModels\MainWindowVM.cs" />
-    <Compile Include="ViewModels\ProductSpecificationAddEditViewModel.cs" />
+    <Compile Include="ViewModels\MaterialSpecsVM.cs" />
+    <Compile Include="ViewModels\ProdSpecAddEditVM.cs" />
     <Compile Include="ViewModels\ProdSpecsVM.cs" />
     <Compile Include="ViewModels\UserAuthWindowVM.cs" />
     <Compile Include="ViewModels\UserRegWindowVM.cs" />
     <Compile Include="Views\Workspaces\ProdSpecsAddEditView.xaml.cs">
       <DependentUpon>ProdSpecsAddEditView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Workspaces\ProdSpecsVM.xaml.cs">
-      <DependentUpon>ProdSpecsVM.xaml</DependentUpon>
+    <Compile Include="Views\Workspaces\ProdSpecsView.xaml.cs">
+      <DependentUpon>ProdSpecsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -213,7 +234,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Workspaces\ProdSpecsVM.xaml">
+    <Page Include="Views\Workspaces\ProdSpecsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -247,6 +268,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EntityDeploy Include="Models\DBModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -281,9 +303,26 @@
       <DependentUpon>DBModel.edmx</DependentUpon>
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
+    <Resource Include="Resources\Images\user_avatar.png" />
+    <None Include="Resources\user_avatar.png" />
+    <Resource Include="Resources\Images\logotype.png" />
+    <None Include="Resources\logotype.png" />
+    <None Include="Resources\icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Utilities\" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 и x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

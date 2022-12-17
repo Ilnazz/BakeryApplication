@@ -11,7 +11,7 @@
 
     <!-- Добавление/редактирование спецификации продукта -->
     <DataTemplate
-        DataType="{x:Type viewmodels:ProdSpecsAddEditViewModel}">
+        DataType="{x:Type viewmodels:ProdSpecAddEditVM}">
         <views:ProdSpecsAddEditView/>
     </DataTemplate>
 

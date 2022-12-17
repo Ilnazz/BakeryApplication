@@ -2,5 +2,35 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Style TargetType="TextBox" BasedOn="{StaticResource FontStyle}">
         <Setter Property="Padding" Value="2.5"/>
+
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackPanel>
+                        <AdornedElementPlaceholder x:Name="Source"/>
+
+                        <Border
+                            MaxWidth="{Binding ActualWidth, ElementName=Source}"
+                            Background="Red"
+                            BorderBrush="Red"
+                            CornerRadius="0,0,5,5"
+                            Padding="5">
+                            <ItemsControl
+                                FontSize="12"
+                                ItemsSource="{Binding}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Foreground="White"
+                                            Text="{Binding ErrorContent}"
+                                            TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Border>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>    
 </ResourceDictionary>

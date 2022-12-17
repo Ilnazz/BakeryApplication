@@ -5,70 +5,17 @@ namespace Bakery.ViewModels.Base
 {
     public class RelayCommand : ICommand
     {
-        #region Constructors
+        #region Constructor
 
-        public RelayCommand(Action<object> execute)
-        {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = delegate { return true; };
-        }
-
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        public RelayCommand(Action<object> execute, Predicate<object> canExecute = null)
         {
             if (execute == null)
                 throw new ArgumentNullException(nameof(execute));
-            else if (canExecute == null)
-                throw new ArgumentNullException(nameof(canExecute));
 
             _execute = execute;
             _canExecute = canExecute;
         }
-
-        public RelayCommand(Action<object> execute, Func<bool> canExecute)
-        {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-            else if (canExecute == null)
-                throw new ArgumentNullException(nameof(canExecute));
-
-            _execute = execute;
-            _canExecute = delegate { return canExecute(); };
-        }
-
-
-
-
-        public RelayCommand(Action execute)
-        {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-
-            _execute = delegate { execute(); };
-            _canExecute = delegate { return true; };
-        }
-
-        public RelayCommand(Action execute, Predicate<object> canExecute)
-        {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-            else if (canExecute == null)
-                throw new ArgumentNullException(nameof(canExecute));
-
-            _execute = delegate { execute(); };
-            _canExecute = canExecute;
-        }
-
-        public RelayCommand(Action execute, Func<bool> canExecute)
-        {
-            if (execute == null)
-                throw new ArgumentNullException(nameof(execute));
-            else if (canExecute == null)
-                throw new ArgumentNullException(nameof(canExecute));
-
-            _execute = delegate { execute(); };
-            _canExecute = delegate { return canExecute(); };
-        }
-        #endregion Constructors
+        #endregion
 
         #region Properties
         private readonly Action<object> _execute;

@@ -4,4 +4,9 @@
         <Setter Property="Padding" Value="2.5"/>
         <Setter Property="Background" Value="{StaticResource AccentColor}"/>
     </Style>
+
+    <Style TargetType="Button" BasedOn="{StaticResource FontStyle}" x:Key="ButtonStyle">
+        <Setter Property="Padding" Value="2.5"/>
+        <Setter Property="Background" Value="{StaticResource AccentColor}"/>
+    </Style>
 </ResourceDictionary>

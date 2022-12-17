@@ -16,7 +16,7 @@ namespace Bakery.ViewModels
         public UserAuthWindowVM()
         {
             AuthorizeCommand = new RelayCommand(Authorize, CanAuthorize);
-            OpenRegistrationWindowCommand = new RelayCommand(OpenRegistrationWindow);
+            OpenUserRegWindowCommand = new RelayCommand(OpenUserRegWindow);
 
             SetRememberedUserLoginAndPassword();
 
@@ -163,80 +163,57 @@ namespace Bakery.ViewModels
 
             User user;
             using (var dbContext = new DBEntities())
-            {
-                try
-                {
-                    user = dbContext.Users.FirstOrDefault(u => u.Login == _login.Trim() && u.Password == _password.Trim());
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Ошибка при работе с базой данных: {ex.Message}");
-                    return;
-                }
-            }
+                user = dbContext.Users.FirstOrDefault(u => u.Login == _login.Trim() && u.Password == _password.Trim());
 
             if (user == null)
             {
-                MessageBox.Show("Пользователь с такими данными не существует");
+                MessageBox.Show("Пользователя с такими данными не существует");
 
                 StartTimerIfMaxAttemptsNumberExceeded();
 
                 return;
             }
 
-            App.CurrentUser = user;
-
             if (_rememberUser == true)
                 RememberUserLoginAndPassword();
             else
                 ResetRememberedUserLoginAndPassword();
 
-            OpenMainWindow();
+            OpenMainWindow(user);
 
             var currentWindow = parameter as Window;
             currentWindow.Close();
         }
 
-        private void OpenMainWindow()
+        private void OpenMainWindow(User user)
         {
-            //TODO: разделить на методы
             MainWindow mainWindow = new MainWindow();
 
-            var mainWindowViewModel = new MainWindowViewModel();
 
-            mainWindow.DataContext = mainWindowViewModel;
-            
-            mainWindow.Closing += (sender, e) =>
+            var mainWindowVM = new MainWindowVM(user.Id);
+            mainWindowVM.Closing += delegate { mainWindow.Close(); };
+
+            mainWindow.Closing += (s, e) =>
             {
-                if (mainWindowViewModel.CloseCommand.CanExecute(null) == false)
-                {
+                if (mainWindowVM.OnClose() == false)
                     e.Cancel = true;
-                    return;
-                }
-
-                var authWindow = new UserAuthWindow();
-                authWindow.Show();
             };
-
-            mainWindowViewModel.Closing += delegate { mainWindow.Close(); };
             
+            mainWindow.DataContext = mainWindowVM;
             mainWindow.Show();
         }
 
-        private bool CanAuthorize()
+        private bool CanAuthorize(object param)
             => _login != ""
                 && _password != ""
                 && _isTimerWorking == false;
         #endregion
 
         #region Opening user registration window
-        public ICommand OpenRegistrationWindowCommand { get; }
+        public ICommand OpenUserRegWindowCommand { get; }
 
-        private void OpenRegistrationWindow(object parameter)
-        {
-            var registrationWindow = new UserRegWindow();
-            registrationWindow.ShowDialog();
-        }
+        private void OpenUserRegWindow(object param)
+            => new UserRegWindow().ShowDialog();
         #endregion
 
         #endregion

@@ -11,27 +11,25 @@ namespace Bakery.Models
 {
     public static class WorkspacesModel
     {
+        #region Constructor
         static WorkspacesModel()
         {
             _workspaces.CollectionChanged += OnWorkspacesChanged;
         }
-        private static readonly ObservableCollection<WorkspaceViewModel> _workspaces = new ObservableCollection<WorkspaceViewModel>();
-        public static ObservableCollection<WorkspaceViewModel> Workspaces { get => _workspaces; }
+        #endregion
 
+        #region Properties
+        private static readonly ObservableCollection<WorkspaceVM> _workspaces = new ObservableCollection<WorkspaceVM>();
+        public static ObservableCollection<WorkspaceVM> Workspaces { get => _workspaces; }
+        #endregion
+
+        #region Methods
         private static void OnWorkspacesChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if (e.NewItems != null && e.NewItems.Count != 0)
-                foreach (WorkspaceViewModel workspace in e.NewItems)
-                    workspace.Closing += OnWorkspaceClosing;
-
-            if (e.OldItems != null && e.OldItems.Count != 0)
-                foreach (WorkspaceViewModel workspace in e.OldItems)
-                    workspace.Closing -= OnWorkspaceClosing;
+                foreach (WorkspaceVM workspaceVM in e.NewItems)
+                    workspaceVM.Closing += () => _workspaces.Remove(workspaceVM);
         }
-
-        private static void OnWorkspaceClosing(object sender, EventArgs e)
-        {
-            _workspaces.Remove(sender as WorkspaceViewModel);
-        }
+        #endregion
     }
 }

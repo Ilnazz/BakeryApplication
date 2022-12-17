@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Bakery.ViewModels
 {
-    public class ProdSpecsVM : WorkspaceViewModel
+    public class ProdSpecsVM : WorkspaceVM
     {
         #region Constructor
         public ProdSpecsVM()
@@ -17,20 +17,21 @@ namespace Bakery.ViewModels
             DisplayTitle = "Спецификации продуктов";
 
             EditCommand = new RelayCommand(Edit);
+            AddCommand = new RelayCommand(Add);
 
             _dbContext.ProductSpecifications.Load();
-            _productSpecifications = _dbContext.ProductSpecifications.Local;
+            ProdSpecs = _dbContext.ProductSpecifications.Local;
         }
         #endregion
 
         #region Properties
         private DBEntities _dbContext = new DBEntities();
 
-        private IEnumerable<ProductSpecification> _productSpecifications;
-        public IEnumerable<ProductSpecification> ProductSpecifications
+        private IEnumerable<ProductSpecification> _prodSpecs;
+        public IEnumerable<ProductSpecification> ProdSpecs
         {
-            get => _productSpecifications;
-            set => Set(ref _productSpecifications, value);
+            get => _prodSpecs;
+            set => Set(ref _prodSpecs, value);
         }
         #endregion
 
@@ -39,9 +40,9 @@ namespace Bakery.ViewModels
         #region Editing
         public ICommand EditCommand { get; }
 
-        private void Edit(object parameter)
+        private void Edit(object param)
         {
-            var prodSpec= parameter as ProductSpecification;
+            var prodSpec= param as ProductSpecification;
 
             if (IsProductSpecificationAlreadyEditing(prodSpec))
             {
@@ -49,25 +50,42 @@ namespace Bakery.ViewModels
                 return;
             }
 
-            var prodSpecVM = new ProdSpecsAddEditViewModel(prodSpec);
-
+            var prodSpecVM = new ProdSpecAddEditVM(prodSpec.Id);
             WorkspacesModel.Workspaces.Add(prodSpecVM);
         }
 
         private bool IsProductSpecificationAlreadyEditing(ProductSpecification prodSpec)
             => WorkspacesModel.Workspaces.Any(viewModel =>
                 {
-                    if (viewModel is ProdSpecsAddEditViewModel prodSpecVM == true
-                        && prodSpecVM.EditingProductSpecification.Id == prodSpec.Id)
+                    if (viewModel is ProdSpecAddEditVM prodSpecVM == true
+                        && prodSpecVM.EditingProdSpec.Id == prodSpec.Id)
                         return true;
                     return false;
                 });
 
         #endregion
 
-        #region Closing
-        protected override void Close(object parameter)
+        #region Adding
+        public ICommand AddCommand { get; }
+
+        private void Add(object param)
         {
+            var prodSpecVM = new ProdSpecAddEditVM();
+
+            prodSpecVM.Closing += () =>
+            {
+                // refresh prodSpecs
+            };
+
+            WorkspacesModel.Workspaces.Add(prodSpecVM);
+        }
+        #endregion
+
+        #region Closing
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
             _dbContext.Dispose();
         }
         #endregion

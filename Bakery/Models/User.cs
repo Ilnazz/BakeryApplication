@@ -18,6 +18,7 @@ namespace Bakery.Models
         public int EmployeeId { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
+        public byte[] Photo { get; set; }
     
         public virtual Employee Employee { get; set; }
     }

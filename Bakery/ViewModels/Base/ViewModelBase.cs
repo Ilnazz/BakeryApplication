@@ -8,7 +8,7 @@ namespace Bakery.ViewModels.Base
     {
         public string DisplayTitle { get; set; }
 
-        #region Property changed notify functional
+        #region Property changed notifying
         public event PropertyChangedEventHandler PropertyChanged;
         public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

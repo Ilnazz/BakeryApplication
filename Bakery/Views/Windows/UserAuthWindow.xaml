@@ -73,7 +73,7 @@
             Margin="0,0,0,5"/>
 
         <Button
-            Command="{Binding OpenRegistrationWindowCommand}"
+            Command="{Binding OpenUserRegWindowCommand}"
             Content="Зарегистрироваться"/>
     </StackPanel>
 </Window>
