@@ -3,44 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Bakery.Views"
+             xmlns:local="clr-namespace:Bakery.Views.Windows"
              xmlns:viewmodels="clr-namespace:Bakery.ViewModels"
              mc:Ignorable="d"
              Title="Авторизация"
-             SizeToContent="WidthAndHeight"
+             Width="425"
+             SizeToContent="Height"
              WindowStartupLocation="CenterScreen"
-             Name="Window">
+             Name="Window"
+             Background="{StaticResource BackgroundColor}">
     <Window.DataContext>
         <viewmodels:UserAuthWindowVM/>
     </Window.DataContext>
 
     <StackPanel
-        Margin="5">
-        <Label
-            Target="{Binding ElementName=TBLogin}"
-            Content="Логин:"
-            Margin="0,0,0,5"/>
-        <TextBox
-            Text="{Binding Login,
-                           UpdateSourceTrigger=PropertyChanged}"
-            x:Name="TBLogin"
-            Margin="0,0,0,5"
-            MaxLength="50"/>
+        Margin="10">
+        <GroupBox
+            Header="Логин"
+            BorderBrush="{StaticResource TextColor}"
+            Padding="5"
+            Margin="0,0,0,5">
+            <TextBox
+                Text="{Binding Login,
+                               UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,0,0,5"
+                MaxLength="50"/>
+        </GroupBox>
 
-        <Label
-            Target="{Binding ElementName=TBPassword}"
-            Content="Пароль:"
-            Margin="0,0,0,5"/>
-        <TextBox
-            Text="{Binding Password,
-                           UpdateSourceTrigger=PropertyChanged}"
-            x:Name="TBPassword"
-            Margin="0,0,0,5"
-            MaxLength="50"/>
+        <GroupBox
+            Header="Пароль"
+            BorderBrush="{StaticResource TextColor}"
+            Padding="5"
+            Margin="0,0,0,5">
+            <TextBox
+                Text="{Binding Password,
+                               UpdateSourceTrigger=PropertyChanged}"
+                Margin="0,0,0,5"
+                MaxLength="50"/>
+        </GroupBox>
 
         <StackPanel
-            Orientation="Horizontal"
-            Margin="0,0,0,5">
+            Orientation="Horizontal">
             <CheckBox
                 IsChecked="{Binding RememberUser,
                                     UpdateSourceTrigger=PropertyChanged}"
@@ -51,29 +54,19 @@
                 Content="Запомнить меня"/>
         </StackPanel>
 
-        <Button
-            Command="{Binding AuthorizeCommand}"
-            CommandParameter="{Binding ElementName=Window}"
-            Content="Войти"
-            Margin="0,0,0,5"/>
-
         <StackPanel
             Visibility="{Binding TimerVisibility}"
-            Margin="0,0,0,5">
+            Margin="0,5,0,5">
             <TextBlock
                 Text="{Binding TimerSeconds, StringFormat={}Можно войти через: {0} секунд}"
                 FontSize="14"
                 Foreground="Red"/>
         </StackPanel>
-
-        <TextBlock
-            Text="Или"
-            TextAlignment="Center"
-            FontSize="12"
-            Margin="0,0,0,5"/>
-
+        
         <Button
-            Command="{Binding OpenUserRegWindowCommand}"
-            Content="Зарегистрироваться"/>
+            Command="{Binding AuthorizeCommand}"
+            CommandParameter="{Binding ElementName=Window}"
+            Content="Войти"
+            Margin="0,0,0,5"/>
     </StackPanel>
 </Window>

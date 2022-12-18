@@ -7,16 +7,18 @@ using System.Windows.Threading;
 using System.Windows;
 using Bakery.Views;
 using Bakery.Views.Windows;
+using System.ComponentModel;
+using System.Data.Entity;
+using System.Collections;
 
 namespace Bakery.ViewModels
 {
-    public class UserAuthWindowVM : ViewModelBase
+    public class UserAuthWindowVM : ViewModelBase, INotifyDataErrorInfo
     {
         #region Constructor
         public UserAuthWindowVM()
         {
             AuthorizeCommand = new RelayCommand(Authorize, CanAuthorize);
-            OpenUserRegWindowCommand = new RelayCommand(OpenUserRegWindow);
 
             SetRememberedUserLoginAndPassword();
 
@@ -24,20 +26,26 @@ namespace Bakery.ViewModels
         }
         #endregion
 
-        //TODO: валидация данных при заполении
         #region Properties
         private string _login = "";
         public string Login
         {
             get => _login;
-            set => Set(ref _login, value);
+            set {
+                ValidateLogin(value);
+                Set(ref _login, value);
+            }
         }
 
         private string _password = "";
         public string Password
         {
             get => _password;
-            set => Set(ref _password, value);
+            set
+            {
+                ValidatePassword(value);
+                Set(ref _password, value);
+            }
         }
 
         private bool _rememberUser = true;
@@ -48,12 +56,56 @@ namespace Bakery.ViewModels
         }
         #endregion
 
+        #region Validation
+
+        #region Errors
+        private readonly ErrorsVM _errorsVM = new ErrorsVM();
+
+        public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
+        public bool HasErrors => _errorsVM.HasErrors;
+
+        public IEnumerable GetErrors(string propName) => _errorsVM.GetErrors(propName);
+        #endregion
+
+        #region Validators
+        private bool ValidateLogin(string value)
+        {
+            var isValid = true;
+            _errorsVM.ClearErrors("Login");
+
+            if (string.IsNullOrEmpty(value) == true)
+            {
+                _errorsVM.AddError("Login", "Логин не может быть пустым");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private bool ValidatePassword(string value)
+        {
+            var isValid = true;
+            _errorsVM.ClearErrors("Password");
+
+            if (string.IsNullOrEmpty(value) == true)
+            {
+                _errorsVM.AddError("Password", "Пароль не может быть пустым");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+        #endregion
+
+        #endregion
+
         #region Timer
         private readonly DispatcherTimer _timer = new DispatcherTimer();
 
         #region Timer Properties
         private const int MAX_ATTEMPTS_NUMBER = 3;
-        private const int TIMER_TOTAL_SECONDS = 60;
+        private const int TIMER_TOTAL_SECONDS = 5;
         
         private bool _isTimerWorking = false;
         public bool IsTimerWorking
@@ -76,7 +128,7 @@ namespace Bakery.ViewModels
             set => Set(ref _timerSeconds, value);
         }
 
-        private int _authorizationAttemptNumber = MAX_ATTEMPTS_NUMBER;
+        private int _authorizationAttemptNumber = 0;
         #endregion
 
         #region Timer methods
@@ -149,21 +201,11 @@ namespace Bakery.ViewModels
 
         private void Authorize(object parameter)
         {
-            //TODO: разделить на методы
-            if (string.IsNullOrWhiteSpace(_login))
-            {
-                MessageBox.Show("Логин не может быть пустым");
-                return;
-            }
-            else if (string.IsNullOrWhiteSpace(_password))
-            {
-                MessageBox.Show("Пароль не может быть пустым");
-                return;
-            }
-
             User user;
             using (var dbContext = new DBEntities())
-                user = dbContext.Users.FirstOrDefault(u => u.Login == _login.Trim() && u.Password == _password.Trim());
+                user = dbContext.Users
+                    .FirstOrDefault(u => u.Login == _login.Trim()
+                        && u.Password == _password.Trim());
 
             if (user == null)
             {
@@ -189,7 +231,6 @@ namespace Bakery.ViewModels
         {
             MainWindow mainWindow = new MainWindow();
 
-
             var mainWindowVM = new MainWindowVM(user.Id);
             mainWindowVM.Closing += delegate { mainWindow.Close(); };
 
@@ -204,21 +245,13 @@ namespace Bakery.ViewModels
         }
 
         private bool CanAuthorize(object param)
-            => _login != ""
-                && _password != ""
-                && _isTimerWorking == false;
-        #endregion
-
-        #region Opening user registration window
-        public ICommand OpenUserRegWindowCommand { get; }
-
-        private void OpenUserRegWindow(object param)
-            => new UserRegWindow().ShowDialog();
+            => _isTimerWorking == false
+                && HasErrors == false;
         #endregion
 
         #endregion
 
-        #region Remember user login and password methods
+        #region Remembering user login and password methods
         private void SetRememberedUserLoginAndPassword()
         {
             if (Properties.Settings.Default.RememberedUserLogin != null)

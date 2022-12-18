@@ -23,11 +23,15 @@ namespace Bakery.ViewModels
             else
                 DisplayTitle = "Редактирование спецификации материала";
 
-            if (materialSpecId != 0)
-                _editingMaterialSpec = _dbContext.MaterialSpecifications
-                                            .First(ps => ps.Id == materialSpecId);
-            else
+            if (materialSpecId == 0)
+            {
                 _editingMaterialSpec = new MaterialSpecification();
+                _dbContext.MaterialSpecifications.Add(_editingMaterialSpec);
+            }
+            else
+                _editingMaterialSpec = _dbContext.MaterialSpecifications.First(ps => ps.Id == materialSpecId);
+            
+            _dbContext.MaterialSpecifications.Add(_editingMaterialSpec);
 
             _dbContext.MeasureUnits.Load();
             AvailableMeasureUnits = _dbContext.MeasureUnits.Local;
@@ -81,6 +85,8 @@ namespace Bakery.ViewModels
             var isValid = true;
             _errorsVM.ClearErrors("Title");
 
+            value = value.Trim();
+
             if (string.IsNullOrEmpty(value) == true)
             {
                 _errorsVM.AddError("Title", "Название не может быть пустым");
@@ -129,8 +135,9 @@ namespace Bakery.ViewModels
         {
             if (_dbContext.ChangeTracker.HasChanges() == false)
                 return false;
-            if (_editingMaterialSpec.MeasureUnit == null)
-                return false;
+            if (string.IsNullOrWhiteSpace(Title)
+                || MeasureUnit == null)
+                    return false;
             return HasErrors == false;
         }
         #endregion

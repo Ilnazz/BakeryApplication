@@ -203,8 +203,7 @@
                                     <TextBlock
                                         Text="{Binding TotalPrice,
                                                        StringFormat={}Итоговая стоимость закупки: {0:f} &#8381;}"
-                                        FontSize="16"
-                                        FontWeight="Bold"/>
+                                        FontSize="16"/>
 
                                     <StackPanel
                                         HorizontalAlignment="Right">

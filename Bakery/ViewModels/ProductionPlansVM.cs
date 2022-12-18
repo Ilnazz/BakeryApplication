@@ -11,7 +11,7 @@ namespace Bakery.ViewModels
     {
         public ProductionPlansVM()
         {
-            DisplayTitle = "Планы производста продукции";
+            DisplayTitle = "Планы производства продукции";
 
             EditCommand = new RelayCommand(Edit);
             AddCommand = new RelayCommand(Add);

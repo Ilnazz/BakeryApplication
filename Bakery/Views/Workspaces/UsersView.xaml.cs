@@ -10,16 +10,17 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Bakery.Views.Windows
+namespace Bakery.Views.Workspaces
 {
     /// <summary>
-    /// Логика взаимодействия для UserRegView.xaml
+    /// Логика взаимодействия для UsersView.xaml
     /// </summary>
-    public partial class UserRegWindow : Window
+    public partial class UsersView : UserControl
     {
-        public UserRegWindow()
+        public UsersView()
         {
             InitializeComponent();
         }

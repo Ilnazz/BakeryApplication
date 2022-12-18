@@ -92,8 +92,8 @@
 
                                 <TextBlock
                                     Text="{Binding Description,
-                                                    Converter={StaticResource TextLengthConverter},
-                                                    ConverterParameter=100}"
+                                                   Converter={StaticResource TextLengthConverter},
+                                                   ConverterParameter=100}"
                                     Grid.Column="1"
                                     Grid.Row="1"
                                     TextWrapping="Wrap"

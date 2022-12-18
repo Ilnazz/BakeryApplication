@@ -140,8 +140,7 @@
                                     <TextBlock
                                         Text="{Binding TotalCount,
                                                        StringFormat={}Итоговое количество продуктов: {0} ед.}"
-                                        FontSize="16"
-                                        FontWeight="Bold"/>
+                                        FontSize="16"/>
 
                                     <StackPanel
                                         HorizontalAlignment="Right">

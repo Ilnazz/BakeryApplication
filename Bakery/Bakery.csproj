@@ -177,7 +177,7 @@
     <Compile Include="ViewModels\ProductionPlansVM.cs" />
     <Compile Include="ViewModels\UserAuthWindowVM.cs" />
     <Compile Include="ViewModels\UserAddEditVM.cs" />
-    <Compile Include="ViewModels\UserRegWindowVM.cs" />
+    <Compile Include="ViewModels\UsersVM.cs" />
     <Compile Include="ViewModels\WorkspacesVM.cs" />
     <Compile Include="Views\Workspaces\MaterialSpecAddEditView.xaml.cs">
       <DependentUpon>MaterialSpecAddEditView.xaml</DependentUpon>
@@ -200,9 +200,6 @@
     <Compile Include="Views\Windows\UserAuthWindow.xaml.cs">
       <DependentUpon>UserAuthWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Windows\UserRegWindow.xaml.cs">
-      <DependentUpon>UserRegWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -216,6 +213,9 @@
     </Compile>
     <Compile Include="Views\Workspaces\UserAddEditView.xaml.cs">
       <DependentUpon>UserAddEditView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Workspaces\UsersView.xaml.cs">
+      <DependentUpon>UsersView.xaml</DependentUpon>
     </Compile>
     <Page Include="Resources\BitmapImages.xaml">
       <SubType>Designer</SubType>
@@ -281,15 +281,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Windows\UserRegWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Workspaces\ProductionPlansView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Workspaces\UserAddEditView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Workspaces\UsersView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

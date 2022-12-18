@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:Bakery.Views.Workspaces"
              xmlns:enums="clr-namespace:Bakery.DataTypes.Enums"
              xmlns:converters="clr-namespace:Bakery.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="800">
+             mc:Ignorable="d" d:DesignWidth="800">
     
     <UserControl.Resources>
         <converters:ComparisonConverter x:Key="ComparisonConverter"/>
@@ -19,24 +18,85 @@
         <Grid
             Margin="10">
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
-
-            <StackPanel
+            
+            <GroupBox
+                Header="Фотография"
+                Padding="5"
+                Grid.Row="0"
+                Grid.Column="0"
                 Margin="0,0,10,0">
-
+                <StackPanel>
+                    <Image
+                        Source="{Binding Photo,
+                                         UpdateSourceTrigger=PropertyChanged,
+                                         TargetNullValue={StaticResource UserAvatar}}"
+                        MaxHeight="120"
+                        Margin="0,0,0,10"/>
+                    <Button
+                        Command="{Binding ChoosePhotoCommand}">
+                        <Button.Style>
+                            <Style
+                                TargetType="Button"
+                                BasedOn="{StaticResource ButtonStyle}">
+                                <Setter
+                                    Property="Content"
+                                    Value="Заменить фотографию"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Photo}"
+                                        Value="{x:Null}">
+                                        <Setter
+                                            Property="Content"
+                                            Value="Добавить фотографию"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                    <Button
+                        Command="{Binding RemovePhotoCommand}"
+                        Content="Удалить фотографию"
+                        Margin="0,10,0,0">
+                        <Button.Style>
+                            <Style
+                                TargetType="Button"
+                                BasedOn="{StaticResource ButtonStyle}">
+                                <Setter
+                                    Property="Visibility"
+                                    Value="Visible"/>
+                                <Style.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding Photo}"
+                                        Value="{x:Null}">
+                                        <Setter
+                                            Property="Visibility"
+                                            Value="Collapsed"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
+                </StackPanel>
+            </GroupBox>
+            
+            <StackPanel
+                Grid.Row="0"
+                Grid.Column="1">
                 <GroupBox
                     Header="Фамилия"
                     Margin="0,0,0,5"
                     Padding="5">
                     <TextBox
-                        Text="{Binding Employee.Surname,
+                        Text="{Binding Surname,
                                        UpdateSourceTrigger=PropertyChanged}"
                         MaxLength="50"/>
                 </GroupBox>
@@ -46,7 +106,7 @@
                     Margin="0,0,0,5"
                     Padding="5">
                     <TextBox
-                        Text="{Binding Employee.Name,
+                        Text="{Binding Name,
                                        UpdateSourceTrigger=PropertyChanged}"
                         MaxLength="50"/>
                 </GroupBox>
@@ -56,19 +116,47 @@
                     Margin="0,0,0,5"
                     Padding="5">
                     <TextBox
-                        Text="{Binding Employee.Name,
+                        Text="{Binding Patronymic,
                                        UpdateSourceTrigger=PropertyChanged}"
                         MaxLength="50"/>
                 </GroupBox>
 
+            </StackPanel>
 
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,0,10,0">
+                <GroupBox
+                    Header="Логин"
+                    Margin="0,0,0,5"
+                    Padding="5">
+                    <TextBox
+                        Text="{Binding Login,
+                                       UpdateSourceTrigger=PropertyChanged}"/>
+                </GroupBox>
+
+                <GroupBox
+                    Header="Пароль"
+                    Margin="0,0,0,5"
+                    Padding="5">
+                    <TextBox
+                        Text="{Binding Password,
+                                       UpdateSourceTrigger=PropertyChanged}"/>
+                </GroupBox>
+            </StackPanel>
+
+            <StackPanel
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,0,10">
                 <GroupBox
                     Header="Пол"
                     Margin="0,0,0,5" Padding="5">
                     <StackPanel
                         Orientation="Horizontal">
                         <RadioButton
-                            IsChecked="{Binding Employee.Gender,
+                            IsChecked="{Binding Gender,
                                                 Converter={StaticResource ComparisonConverter},
                                                 ConverterParameter={x:Static enums:EmployeeGender.Male},
                                                 NotifyOnSourceUpdated=True,
@@ -77,7 +165,7 @@
                             VerticalContentAlignment="Center"
                             Margin="0,5,5,0"/>
                         <RadioButton
-                            IsChecked="{Binding Employee.Gender,
+                            IsChecked="{Binding Gender,
                                                 Converter={StaticResource ComparisonConverter},
                                                 ConverterParameter={x:Static enums:EmployeeGender.Female},
                                                 NotifyOnSourceUpdated=True,
@@ -94,7 +182,7 @@
                     <StackPanel
                         Orientation="Horizontal">
                         <RadioButton
-                            IsChecked="{Binding Employee.Role,
+                            IsChecked="{Binding Role,
                                                 Converter={StaticResource ComparisonConverter},
                                                 ConverterParameter={x:Static enums:EmployeeRole.Administrator},
                                                 NotifyOnSourceUpdated=True,
@@ -103,7 +191,7 @@
                             VerticalContentAlignment="Center"
                             Margin="0,5,5,0"/>
                         <RadioButton
-                            IsChecked="{Binding Employee.Role,
+                            IsChecked="{Binding Role,
                                                 Converter={StaticResource ComparisonConverter},
                                                 ConverterParameter={x:Static enums:EmployeeRole.Warehouseman},
                                                 NotifyOnSourceUpdated=True,
@@ -112,7 +200,7 @@
                             VerticalContentAlignment="Center"
                             Margin="0,5,5,0"/>
                         <RadioButton
-                            IsChecked="{Binding Employee.Role,
+                            IsChecked="{Binding Role,
                                                 Converter={StaticResource ComparisonConverter},
                                                 ConverterParameter={x:Static enums:EmployeeRole.Baker},
                                                 NotifyOnSourceUpdated=True,
@@ -121,7 +209,7 @@
                             VerticalContentAlignment="Center"
                             Margin="0,5,5,0"/>
                         <RadioButton
-                            IsChecked="{Binding Employee.Role,
+                            IsChecked="{Binding Role,
                                                 Converter={StaticResource ComparisonConverter},
                                                 ConverterParameter={x:Static enums:EmployeeRole.Seller},
                                                 NotifyOnSourceUpdated=True,
@@ -133,103 +221,18 @@
                 </GroupBox>
 
                 <GroupBox
-                    Header="Заработная плата"
-                    Margin="0,0,0,5"
+                    Header="Заработная плата, руб."
                     Padding="5">
                     <TextBox
-                        Text="{Binding Employee.Salary,
+                        Text="{Binding Salary,
                                        UpdateSourceTrigger=PropertyChanged}"/>
-                </GroupBox>
-
-                <GroupBox
-                    Header="Логин"
-                    Margin="0,0,0,5"
-                    Padding="5">
-                    <TextBox
-                        Text="{Binding Employee.Salary,
-                                       UpdateSourceTrigger=PropertyChanged}"/>
-                </GroupBox>
-
-                <GroupBox
-                    Header="Логин"
-                    Margin="0,0,0,5"
-                    Padding="5">
-                    <TextBox
-                        Text="{Binding Login,
-                                       UpdateSourceTrigger=PropertyChanged}"/>
-                </GroupBox>
-
-                <GroupBox
-                    Header="Пароль"
-                    Margin="0,0,0,5"
-                    Padding="5">
-                    <TextBox
-                        Text="{Binding Login,
-                                       UpdateSourceTrigger=PropertyChanged}"/>
-                </GroupBox>
-
-            </StackPanel>
-
-            <StackPanel
-                Grid.Column="1"
-                Margin="5,0,0,0">
-
-                <GroupBox
-                    Header="Фотография"
-                    Padding="5">
-                    <StackPanel>
-                        <Image
-                            Source="{Binding Photo,
-                                             UpdateSourceTrigger=PropertyChanged,
-                                             TargetNullValue={StaticResource NoPhoto}}"
-                            MaxWidth="450"
-                            Margin="0,0,0,10"/>
-                        <Button
-                            Command="{Binding ChoosePhotoCommand}"
-                            Margin="0,0,0,10">
-                            <Button.Style>
-                                <Style
-                                    TargetType="Button"
-                                    BasedOn="{StaticResource ButtonStyle}">
-                                    <Setter
-                                        Property="Content"
-                                        Value="Заменить фотографию"/>
-                                    <Style.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding Photo}"
-                                            Value="{x:Null}">
-                                            <Setter
-                                                Property="Content"
-                                                Value="Добавить фотографию"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                        <Button
-                            Command="{Binding RemovePhotoCommand}"
-                            Content="Удалить фотографию">
-                            <Button.Style>
-                                <Style
-                                    TargetType="Button"
-                                    BasedOn="{StaticResource ButtonStyle}">
-                                    <Setter Property="Visibility" Value="Visible"/>
-                                    <Style.Triggers>
-                                        <DataTrigger Binding="{Binding Photo}" Value="{x:Null}">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                        </DataTrigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
-                        </Button>
-                    </StackPanel>
                 </GroupBox>
             </StackPanel>
 
             <Button
                 Command="{Binding SaveCommand}"
                 Content="Сохранить"
-                Grid.Row="1"
+                Grid.Row="2"
                 Grid.Column="1"
                 HorizontalAlignment="Right">
                 <Button.Style>
@@ -237,7 +240,7 @@
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding DataContext.IsNewUser,
                                                                RelativeSource={RelativeSource AncestorType={x:Type UserControl}}}">
-                                <Setter Property="Content" Value="Добавить"/>
+                                <Setter Property="Content" Value="Зарегистрировать"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

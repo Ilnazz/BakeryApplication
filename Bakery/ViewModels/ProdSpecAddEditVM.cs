@@ -29,7 +29,10 @@ namespace Bakery.ViewModels
                 DisplayTitle = "Редактирование спецификации продукта";
 
             if (prodSpecId == 0)
+            {
                 _editingProdSpec = new ProductSpecification();
+                _dbContext.ProductSpecifications.Add(_editingProdSpec);
+            }
             else
                 _editingProdSpec = _dbContext.ProductSpecifications.First(ps => ps.Id == prodSpecId);
 
@@ -98,7 +101,7 @@ namespace Bakery.ViewModels
 
         public string Price
         {
-            get => _editingProdSpec.Price > 0 ? _editingProdSpec.Price.ToString() : "";
+            get => _editingProdSpec.Price > 0 ? $"{_editingProdSpec.Price:f}" : "";
             set
             {
                 if (ValidatePrice(value) == true)
@@ -147,6 +150,8 @@ namespace Bakery.ViewModels
         {
             var isValid = true;
             _errorsVM.ClearErrors("Title");
+
+            value = value.Trim();
 
             if (string.IsNullOrEmpty(value) == true)
             {
@@ -214,7 +219,7 @@ namespace Bakery.ViewModels
         {
             var isValid = true;
             _errorsVM.ClearErrors("Weight");
-            
+
             if (string.IsNullOrEmpty(value))
             {
                 _errorsVM.AddError("Weight", "Вес не может быть пустым");
@@ -318,7 +323,11 @@ namespace Bakery.ViewModels
         {
             //if (_dbContext.ChangeTracker.HasChanges() == false)
                 //return false;
-            if (_editingProdSpec.MeasureUnit == null)
+            if (string.IsNullOrWhiteSpace(Title)
+                || string.IsNullOrWhiteSpace(Description)
+                || string.IsNullOrWhiteSpace(Price)
+                || string.IsNullOrWhiteSpace(Weight)
+                || MeasureUnit == null)
                 return false;
             return HasErrors == false;
         }
@@ -366,14 +375,15 @@ namespace Bakery.ViewModels
                 return false;
             }
         }
-        #endregion
-
-        #endregion
 
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
             _dbContext.Dispose();
         }
+        #endregion
+
+        #endregion
+
     }
 }

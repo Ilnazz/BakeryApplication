@@ -26,6 +26,7 @@ namespace Bakery.ViewModels
                 new CommandVM("Спецификации материалов", NavigateCommand),
                 new CommandVM("Планы закупок материалов", NavigateCommand),
                 new CommandVM("Планы производства продукции", NavigateCommand),
+                new CommandVM("Пользователи", NavigateCommand),
             };
 
             Workspaces.CollectionChanged += (s, e) =>
@@ -80,6 +81,9 @@ namespace Bakery.ViewModels
                 case "Планы производства продукции":
                     workspaceVM = new ProductionPlansVM();
                     break;
+                case "Пользователи":
+                    workspaceVM = new UsersVM();
+                    break;
                 default:
                     throw new ArgumentException();
             }
@@ -96,6 +100,9 @@ namespace Bakery.ViewModels
 
         private void OpenUserProfile(object param)
         {
+            if (IsViewAlreadyOpened("Регистрация нового пользователя")
+                || IsViewAlreadyOpened("Редактирование данных пользователя"))
+                return;
             var userProfileVM = new UserAddEditVM(CurrentUser.Id);
             Workspaces.Add(userProfileVM);
         }
