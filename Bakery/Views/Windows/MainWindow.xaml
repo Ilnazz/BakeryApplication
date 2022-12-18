@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Bakery.Views.Workspaces"
         xmlns:views="clr-namespace:Bakery.Views.Workspaces"
         xmlns:viewmodels="clr-namespace:Bakery.ViewModels"
-        mc:Ignorable="d" Width="1252" Height="800"
+        mc:Ignorable="d" Width="1291" Height="800"
         Title="Основная страница"
         WindowStartupLocation="CenterScreen">
 
@@ -67,6 +67,11 @@
                         Margin="0,0,10,0"
                         VerticalAlignment="Center"
                         FontSize="16"/>
+                    <Button
+                        Command="{Binding OpenUserProfileCommand}"
+                        Margin="0,0,10,0"
+                        Content="Выйти"
+                        VerticalAlignment="Center"/>
                     <Button
                         Command="{Binding UserLogOutCommand}"
                         Content="Выйти"

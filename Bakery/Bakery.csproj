@@ -87,6 +87,7 @@
     <Compile Include="Converters\TextLengthConverter.cs" />
     <Compile Include="Models\DBEntitiesExtensions\Employee.Extension.cs" />
     <Compile Include="Models\DBEntitiesExtensions\MaterialsPurchasePlan.Extension.cs" />
+    <Compile Include="Models\DBEntitiesExtensions\ProductionPlan.Extension.cs" />
     <Compile Include="Models\DBEntitiesExtensions\ProductSpecification.Extension.cs" />
     <Compile Include="Models\DBEntitiesExtensions\User.Extension.cs" />
     <Compile Include="Models\DBModel.Context.cs">
@@ -173,7 +174,9 @@
     <Compile Include="ViewModels\MaterialsPurchasePlansVM.cs" />
     <Compile Include="ViewModels\ProdSpecAddEditVM.cs" />
     <Compile Include="ViewModels\ProdSpecsVM.cs" />
+    <Compile Include="ViewModels\ProductionPlansVM.cs" />
     <Compile Include="ViewModels\UserAuthWindowVM.cs" />
+    <Compile Include="ViewModels\UserAddEditVM.cs" />
     <Compile Include="ViewModels\UserRegWindowVM.cs" />
     <Compile Include="ViewModels\WorkspacesVM.cs" />
     <Compile Include="Views\Workspaces\MaterialSpecAddEditView.xaml.cs">
@@ -208,6 +211,12 @@
     <Compile Include="DataTypes\Enums\MeasureUnit.cs" />
     <Compile Include="DataTypes\Enums\PlanState.cs" />
     <Compile Include="DataTypes\Enums\EmployeeRole.cs" />
+    <Compile Include="Views\Workspaces\ProductionPlansView.xaml.cs">
+      <DependentUpon>ProductionPlansView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Workspaces\UserAddEditView.xaml.cs">
+      <DependentUpon>UserAddEditView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Resources\BitmapImages.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -273,6 +282,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Windows\UserRegWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Workspaces\ProductionPlansView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Workspaces\UserAddEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

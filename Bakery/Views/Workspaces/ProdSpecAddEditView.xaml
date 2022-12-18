@@ -8,7 +8,7 @@
 
     <ScrollViewer>
         <Grid
-            Margin="5">
+            Margin="10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="Auto"/>
@@ -152,7 +152,7 @@
 
             <StackPanel
                 Grid.Column="1"
-                Margin="5,0,0,0">
+                Margin="10,0,0,0">
             
                 <GroupBox
                     Header="Фотография"

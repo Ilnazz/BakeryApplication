@@ -18,12 +18,14 @@ namespace Bakery.ViewModels
         {
             NavigateCommand = new RelayCommand(Navigate);
             UserLogOutCommand = new RelayCommand(UserLogOut);
+            OpenUserProfileCommand = new RelayCommand(OpenUserProfile);
 
             NavigationCommands = new List<CommandVM>()
             {
                 new CommandVM("Спецификации продуктов", NavigateCommand),
                 new CommandVM("Спецификации материалов", NavigateCommand),
                 new CommandVM("Планы закупок материалов", NavigateCommand),
+                new CommandVM("Планы производства продукции", NavigateCommand),
             };
 
             Workspaces.CollectionChanged += (s, e) =>
@@ -75,6 +77,9 @@ namespace Bakery.ViewModels
                 case "Планы закупок материалов":
                     workspaceVM = new MaterialsPurchasePlansVM();
                     break;
+                case "Планы производства продукции":
+                    workspaceVM = new ProductionPlansVM();
+                    break;
                 default:
                     throw new ArgumentException();
             }
@@ -84,6 +89,16 @@ namespace Bakery.ViewModels
 
         private bool IsViewAlreadyOpened(string vmTitle)
             => Workspaces.Any(ws => ws.DisplayTitle == vmTitle);
+        #endregion
+
+        #region Opening user profile
+        public ICommand OpenUserProfileCommand { get; }
+
+        private void OpenUserProfile(object param)
+        {
+            var userProfileVM = new UserAddEditVM(CurrentUser.Id);
+            Workspaces.Add(userProfileVM);
+        }
         #endregion
 
         #region User logging out

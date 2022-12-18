@@ -33,6 +33,18 @@
         <views:MaterialsPurchasePlansView/>
     </DataTemplate>
 
+    <!-- Планы производства продукции -->
+    <DataTemplate
+        DataType="{x:Type viewmodels:ProductionPlansVM}">
+        <views:ProductionPlansView/>
+    </DataTemplate>
+
+    <!-- Профиль пользователя - сотрудника -->
+    <DataTemplate
+        DataType="{x:Type viewmodels:UserAddEditVM}">
+        <views:UserAddEditView/>
+    </DataTemplate>
+
     <!-- Шаблон команды-гиперссылки -->
     <DataTemplate
         x:Key="CommandHyperlinkTemplate">
