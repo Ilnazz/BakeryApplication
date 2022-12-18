@@ -27,6 +27,12 @@
         <views:MaterialSpecAddEditView/>
     </DataTemplate>
 
+    <!-- Планы закупок материалов -->
+    <DataTemplate
+        DataType="{x:Type viewmodels:MaterialsPurchasePlansVM}">
+        <views:MaterialsPurchasePlansView/>
+    </DataTemplate>
+
     <!-- Шаблон команды-гиперссылки -->
     <DataTemplate
         x:Key="CommandHyperlinkTemplate">

@@ -298,6 +298,12 @@ namespace Bakery.ViewModels
             _editingProdSpec.Title = _editingProdSpec.Title.Trim();
             _editingProdSpec.Description = _editingProdSpec.Description.Trim();
 
+            Ingredients.ToList().ForEach(i =>
+            {
+                if (_editingProdSpec.ProductIngredients.Contains(i) == false)
+                    _editingProdSpec.ProductIngredients.Add(i);
+            });
+
             if (IsNewProdSpec)
             {
                 _dbContext.ProductSpecifications.Add(_editingProdSpec);

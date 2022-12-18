@@ -85,6 +85,8 @@
     </ApplicationDefinition>
     <Compile Include="Converters\ComparisonConverter.cs" />
     <Compile Include="Converters\TextLengthConverter.cs" />
+    <Compile Include="Models\DBEntitiesExtensions\Employee.Extension.cs" />
+    <Compile Include="Models\DBEntitiesExtensions\MaterialsPurchasePlan.Extension.cs" />
     <Compile Include="Models\DBEntitiesExtensions\ProductSpecification.Extension.cs" />
     <Compile Include="Models\DBEntitiesExtensions\User.Extension.cs" />
     <Compile Include="Models\DBModel.Context.cs">
@@ -168,15 +170,20 @@
     <Compile Include="ViewModels\MainWindowVM.cs" />
     <Compile Include="ViewModels\MaterialSpecAddEditVM.cs" />
     <Compile Include="ViewModels\MaterialSpecsVM.cs" />
+    <Compile Include="ViewModels\MaterialsPurchasePlansVM.cs" />
     <Compile Include="ViewModels\ProdSpecAddEditVM.cs" />
     <Compile Include="ViewModels\ProdSpecsVM.cs" />
     <Compile Include="ViewModels\UserAuthWindowVM.cs" />
     <Compile Include="ViewModels\UserRegWindowVM.cs" />
+    <Compile Include="ViewModels\WorkspacesVM.cs" />
     <Compile Include="Views\Workspaces\MaterialSpecAddEditView.xaml.cs">
       <DependentUpon>MaterialSpecAddEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Workspaces\MaterialSpecsView.xaml.cs">
       <DependentUpon>MaterialSpecsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Workspaces\MaterialsPurchasePlansView.xaml.cs">
+      <DependentUpon>MaterialsPurchasePlansView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Workspaces\ProdSpecAddEditView.xaml.cs">
       <DependentUpon>ProdSpecAddEditView.xaml</DependentUpon>
@@ -242,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Workspaces\MaterialSpecsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Workspaces\MaterialsPurchasePlansView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -319,9 +330,7 @@
       <LastGenOutput>DBModel.cs</LastGenOutput>
     </Content>
     <Resource Include="Resources\Images\user_avatar.png" />
-    <None Include="Resources\user_avatar.png" />
     <Resource Include="Resources\Images\logotype.png" />
-    <None Include="Resources\logotype.png" />
     <None Include="Resources\icon.ico" />
   </ItemGroup>
   <ItemGroup>

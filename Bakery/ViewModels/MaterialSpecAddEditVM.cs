@@ -87,7 +87,7 @@ namespace Bakery.ViewModels
                 isValid = false;
             }
 
-            var isAlreadyExists = _dbContext.ProductSpecifications.Any(ps => ps.Title == value);
+            var isAlreadyExists = _dbContext.ProductSpecifications.Count(ps => ps.Title == value) > 1;
             if (isAlreadyExists)
             {
                 _errorsVM.AddError("Title", "Такая спецификация материала уже существует");

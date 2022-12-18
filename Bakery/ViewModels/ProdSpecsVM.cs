@@ -18,11 +18,11 @@ namespace Bakery.ViewModels
 
             EditCommand = new RelayCommand(Edit);
             AddCommand = new RelayCommand(Add);
+            RefreshCommand = new RelayCommand(Refresh);
 
             _dbContext.ProductSpecifications.Load();
             ProdSpecs = _dbContext.ProductSpecifications.Local;
 
-            RefreshCommand = new RelayCommand(Refresh);
         }
         #endregion
 

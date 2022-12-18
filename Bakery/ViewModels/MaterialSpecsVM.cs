@@ -18,6 +18,7 @@ namespace Bakery.ViewModels
 
             EditCommand = new RelayCommand(Edit);
             AddCommand = new RelayCommand(Add);
+            RefreshCommand = new RelayCommand(Refresh);
 
             _dbContext.MaterialSpecifications.Load();
             MaterialSpecs = _dbContext.MaterialSpecifications.Local;
@@ -77,6 +78,18 @@ namespace Bakery.ViewModels
             };
 
             WorkspacesModel.Workspaces.Add(materialSpecAddEditVM);
+        }
+        #endregion
+
+        #region Refreshing
+        public ICommand RefreshCommand { get; }
+
+        private void Refresh(object param)
+        {
+            _dbContext.Dispose();
+            _dbContext = new DBEntities();
+            _dbContext.MaterialSpecifications.Load();
+            MaterialSpecs = _dbContext.MaterialSpecifications.Local;
         }
         #endregion
 

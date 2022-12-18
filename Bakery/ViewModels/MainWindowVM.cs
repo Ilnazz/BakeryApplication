@@ -23,6 +23,7 @@ namespace Bakery.ViewModels
             {
                 new CommandVM("Спецификации продуктов", NavigateCommand),
                 new CommandVM("Спецификации материалов", NavigateCommand),
+                new CommandVM("Планы закупок материалов", NavigateCommand),
             };
 
             Workspaces.CollectionChanged += (s, e) =>
@@ -70,6 +71,9 @@ namespace Bakery.ViewModels
                     break;
                 case "Спецификации материалов":
                     workspaceVM = new MaterialSpecsVM();
+                    break;
+                case "Планы закупок материалов":
+                    workspaceVM = new MaterialsPurchasePlansVM();
                     break;
                 default:
                     throw new ArgumentException();
