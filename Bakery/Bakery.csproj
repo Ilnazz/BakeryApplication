@@ -178,7 +178,6 @@
     <Compile Include="ViewModels\UserAuthWindowVM.cs" />
     <Compile Include="ViewModels\UserAddEditVM.cs" />
     <Compile Include="ViewModels\UsersVM.cs" />
-    <Compile Include="ViewModels\WorkspacesVM.cs" />
     <Compile Include="Views\Workspaces\MaterialSpecAddEditView.xaml.cs">
       <DependentUpon>MaterialSpecAddEditView.xaml</DependentUpon>
     </Compile>

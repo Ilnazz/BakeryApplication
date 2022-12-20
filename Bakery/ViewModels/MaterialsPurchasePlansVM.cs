@@ -10,8 +10,10 @@ namespace Bakery.ViewModels
 {
     public class MaterialsPurchasePlansVM : WorkspaceVM
     {
+        private int _currentUserId;
+
         #region Constructor
-        public MaterialsPurchasePlansVM()
+        public MaterialsPurchasePlansVM(int userId)
         {
             DisplayTitle = "Планы закупок материалов";
 
@@ -19,8 +21,7 @@ namespace Bakery.ViewModels
             AddCommand = new RelayCommand(Add);
             RefreshCommand = new RelayCommand(Refresh);
 
-            _dbContext.MaterialsPurchasePlans.Load();
-            MaterialsPurchasePlans = _dbContext.MaterialsPurchasePlans.Local;
+            _currentUserId = userId;
         }
         #endregion
 
@@ -83,8 +84,7 @@ namespace Bakery.ViewModels
         {
             _dbContext.Dispose();
             _dbContext = new DBEntities();
-            _dbContext.MaterialsPurchasePlans.Load();
-            MaterialsPurchasePlans = _dbContext.MaterialsPurchasePlans.Local;
+            LoadMaterialsPurchasePlansAccordingToUser();
         }
         #endregion
 
@@ -98,5 +98,12 @@ namespace Bakery.ViewModels
         #endregion
 
         #endregion
+
+        private void LoadMaterialsPurchasePlansAccordingToUser()
+        {
+            _dbContext.MaterialsPurchasePlans.Load();
+            MaterialsPurchasePlans = _dbContext.MaterialsPurchasePlans.Local
+                .Where(mpp => mpp.Employees.Any(emp => emp.Users.First().Id == _currentUserId));
+        }
     }
 }

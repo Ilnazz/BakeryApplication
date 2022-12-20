@@ -18,6 +18,12 @@ namespace Bakery.ViewModels
 {
     public class UserAddEditVM : WorkspaceVM, INotifyDataErrorInfo
     {
+        
+        public bool IsAdmin
+        {
+            get => EditingUser.Employee.RoleId == (int)EmployeeRole.Administrator;
+        }
+
         #region Constructor
         public UserAddEditVM(int userId = 0)
         {

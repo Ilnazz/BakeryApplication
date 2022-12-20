@@ -351,22 +351,7 @@ namespace Bakery.ViewModels
             }
             else if (result == MessageBoxResult.No)
             {
-                var entry = _dbContext.ChangeTracker
-                    .Entries().First(e => e.State != EntityState.Unchanged);
-
-                switch (entry.State)
-                {
-                    case EntityState.Modified:
-                        entry.CurrentValues.SetValues(entry.OriginalValues);
-                        entry.State = EntityState.Unchanged;
-                        break;
-                    case EntityState.Added:
-                        entry.State = EntityState.Detached;
-                        break;
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Unchanged;
-                        break;
-                }
+                DiscardChanges(_dbContext);
 
                 return true;
             }

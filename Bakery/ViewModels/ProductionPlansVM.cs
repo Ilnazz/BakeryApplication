@@ -3,13 +3,16 @@ using Bakery.ViewModels.Base;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Windows.Input;
 
 namespace Bakery.ViewModels
 {
     public class ProductionPlansVM : WorkspaceVM
     {
-        public ProductionPlansVM()
+        private int _currentUserId;
+
+        public ProductionPlansVM(int userId)
         {
             DisplayTitle = "Планы производства продукции";
 
@@ -17,8 +20,9 @@ namespace Bakery.ViewModels
             AddCommand = new RelayCommand(Add);
             RefreshCommand = new RelayCommand(Refresh);
 
-            _dbContext.ProductionPlans.Load();
-            ProductionPlans = _dbContext.ProductionPlans.Local;
+            _currentUserId = userId;
+
+            LoadProductionPlansAccordingToCurrentUser();
         }
 
         #region Properties
@@ -59,8 +63,7 @@ namespace Bakery.ViewModels
         {
             _dbContext.Dispose();
             _dbContext = new DBEntities();
-            _dbContext.ProductionPlans.Load();
-            ProductionPlans = _dbContext.ProductionPlans.Local;
+            LoadProductionPlansAccordingToCurrentUser();
         }
         #endregion
 
@@ -73,5 +76,12 @@ namespace Bakery.ViewModels
         #endregion
 
         #endregion
+
+        private void LoadProductionPlansAccordingToCurrentUser()
+        {
+            _dbContext.ProductionPlans.Load();
+            ProductionPlans = _dbContext.ProductionPlans.Local
+                .Where(pp => pp.Employees.Any(emp => emp.Users.First().Id == _currentUserId));
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Bakery.Models;
+﻿using Bakery.DataTypes.Enums;
+using Bakery.Models;
 using Bakery.ViewModels.Base;
 using Bakery.Views.Windows;
 using System;
@@ -35,6 +36,39 @@ namespace Bakery.ViewModels
             };
 
             CurrentUser = _dbContext.Users.First(u => u.Id == userId);
+
+            switch ((EmployeeRole)CurrentUser.Employee.RoleId)
+            {
+                case EmployeeRole.Administrator:
+                    NavigationCommands = new List<CommandVM>()
+                    {
+                        new CommandVM("Спецификации продуктов", NavigateCommand),
+                        new CommandVM("Спецификации материалов", NavigateCommand),
+                        new CommandVM("Планы закупок материалов", NavigateCommand),
+                        new CommandVM("Планы производства продукции", NavigateCommand),
+                        new CommandVM("Пользователи", NavigateCommand),
+                    };
+                    break;
+                case EmployeeRole.Baker:
+                    NavigationCommands = new List<CommandVM>()
+                    {
+                        new CommandVM("Спецификации продуктов", NavigateCommand),
+                        new CommandVM("Планы производства продукции", NavigateCommand),
+                    };
+                    break;
+                case EmployeeRole.Warehouseman:
+                    NavigationCommands = new List<CommandVM>()
+                    {
+                        new CommandVM("Спецификации материалов", NavigateCommand),
+                        new CommandVM("Планы закупок материалов", NavigateCommand),
+                    };
+                    break;
+                case EmployeeRole.Seller:
+                    NavigationCommands = new List<CommandVM>()
+                    {
+                    };
+                    break;
+            }
         }
         #endregion
 
@@ -76,10 +110,10 @@ namespace Bakery.ViewModels
                     workspaceVM = new MaterialSpecsVM();
                     break;
                 case "Планы закупок материалов":
-                    workspaceVM = new MaterialsPurchasePlansVM();
+                    workspaceVM = new MaterialsPurchasePlansVM(CurrentUser.Id);
                     break;
                 case "Планы производства продукции":
-                    workspaceVM = new ProductionPlansVM();
+                    workspaceVM = new ProductionPlansVM(CurrentUser.Id);
                     break;
                 case "Пользователи":
                     workspaceVM = new UsersVM();
@@ -114,12 +148,16 @@ namespace Bakery.ViewModels
         private bool _isUserLoggingOut = false;
         private void UserLogOut(object param)
         {
-            var result = MessageBox.Show("Выйти из системы?",
+            var result = MessageBox.Show("Выйти из системы? Несохранённые данные будут потеряны",
                 "Подтверждение",
                 MessageBoxButton.YesNo,
                 MessageBoxImage.Question);
             if (result == MessageBoxResult.No)
                 return;
+
+            DiscardChanges(_dbContext);
+
+            WorkspacesModel.Workspaces.Clear();
 
             var userAuthWindow = new UserAuthWindow();
             userAuthWindow.Show();

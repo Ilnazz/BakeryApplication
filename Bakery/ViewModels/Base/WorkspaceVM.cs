@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Bakery.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,5 +37,26 @@ namespace Bakery.ViewModels.Base
 
         protected virtual bool Close() => true;
         #endregion
+
+        protected void DiscardChanges(DBEntities dbContext)
+        {
+            dbContext.ChangeTracker
+                .Entries().Where(e => e.State != EntityState.Unchanged).ToList().ForEach(e =>
+                {
+                    switch (e.State)
+                    {
+                        case EntityState.Modified:
+                            e.CurrentValues.SetValues(e.OriginalValues);
+                            e.State = EntityState.Unchanged;
+                            break;
+                        case EntityState.Added:
+                            e.State = EntityState.Detached;
+                            break;
+                        case EntityState.Deleted:
+                            e.State = EntityState.Unchanged;
+                            break;
+                    }
+                });
+        }
     }
 }
